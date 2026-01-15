@@ -1,0 +1,56 @@
+{
+  "total_countries": 94,
+  "total_measurements": 2774036,
+  "period": {
+    "start": 2018,
+    "end": 2023
+  },
+  "pollutants": [
+    "pm25",
+    "pm10",
+    "no2",
+    "o3",
+    "so2",
+    "co"
+  ],
+  "pollutant_labels": {
+    "pm25": "PM2.5",
+    "pm10": "PM10",
+    "no2": "NO₂",
+    "o3": "O₃",
+    "so2": "SO₂",
+    "co": "CO"
+  },
+  "who_limits": {
+    "pm25": 5,
+    "pm10": 15,
+    "no2": 10,
+    "o3": 100,
+    "so2": 40,
+    "co": 4000
+  },
+  "units": {
+    "pm25": "µg/m³",
+    "pm10": "µg/m³",
+    "no2": "µg/m³",
+    "o3": "µg/m³",
+    "so2": "µg/m³",
+    "co": "µg/m³"
+  },
+  "median_values": {
+    "pm25": 13.26,
+    "pm10": 18.17,
+    "no2": 11.64,
+    "o3": 50.76,
+    "so2": 3.22,
+    "co": 249.01
+  },
+  "above_who_pct": {
+    "pm25": 93.3,
+    "pm10": 63.0,
+    "no2": 59.6,
+    "o3": 1.8,
+    "so2": 0.0,
+    "co": 0.0
+  }
+}

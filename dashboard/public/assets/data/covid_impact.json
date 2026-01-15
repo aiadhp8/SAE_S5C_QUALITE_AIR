@@ -1,0 +1,1050 @@
+[
+  {
+    "country_code": "AD",
+    "country_name": "Andorra",
+    "parameter": "pm10",
+    "val_2019": 22.69,
+    "val_2020": 17.87,
+    "variation_pct": -21.2
+  },
+  {
+    "country_code": "AD",
+    "country_name": "Andorra",
+    "parameter": "no2",
+    "val_2019": 30.86,
+    "val_2020": 24.22,
+    "variation_pct": -21.5
+  },
+  {
+    "country_code": "AU",
+    "country_name": "Australia",
+    "parameter": "pm10",
+    "val_2019": 9.03,
+    "val_2020": 27.69,
+    "variation_pct": 206.6
+  },
+  {
+    "country_code": "BD",
+    "country_name": "Bangladesh",
+    "parameter": "pm25",
+    "val_2019": 79.29,
+    "val_2020": 65.49,
+    "variation_pct": -17.4
+  },
+  {
+    "country_code": "BE",
+    "country_name": "Belgium",
+    "parameter": "pm25",
+    "val_2019": 5.67,
+    "val_2020": 5.78,
+    "variation_pct": 1.9
+  },
+  {
+    "country_code": "BE",
+    "country_name": "Belgium",
+    "parameter": "pm10",
+    "val_2019": 9.47,
+    "val_2020": 11.14,
+    "variation_pct": 17.6
+  },
+  {
+    "country_code": "BE",
+    "country_name": "Belgium",
+    "parameter": "no2",
+    "val_2019": 12.26,
+    "val_2020": 9.22,
+    "variation_pct": -24.8
+  },
+  {
+    "country_code": "BH",
+    "country_name": "Bahrain",
+    "parameter": "pm25",
+    "val_2019": 48.68,
+    "val_2020": 39.79,
+    "variation_pct": -18.3
+  },
+  {
+    "country_code": "CA",
+    "country_name": "Canada",
+    "parameter": "pm25",
+    "val_2019": 4.73,
+    "val_2020": 4.78,
+    "variation_pct": 1.1
+  },
+  {
+    "country_code": "CA",
+    "country_name": "Canada",
+    "parameter": "pm10",
+    "val_2019": 9.3,
+    "val_2020": 7.96,
+    "variation_pct": -14.4
+  },
+  {
+    "country_code": "CA",
+    "country_name": "Canada",
+    "parameter": "no2",
+    "val_2019": 0.01,
+    "val_2020": 0.01,
+    "variation_pct": 0.0
+  },
+  {
+    "country_code": "CH",
+    "country_name": "Switzerland",
+    "parameter": "pm25",
+    "val_2019": 7.01,
+    "val_2020": 9.73,
+    "variation_pct": 38.8
+  },
+  {
+    "country_code": "CH",
+    "country_name": "Switzerland",
+    "parameter": "pm10",
+    "val_2019": 12.16,
+    "val_2020": 13.01,
+    "variation_pct": 7.0
+  },
+  {
+    "country_code": "CH",
+    "country_name": "Switzerland",
+    "parameter": "no2",
+    "val_2019": 17.23,
+    "val_2020": 16.48,
+    "variation_pct": -4.4
+  },
+  {
+    "country_code": "CL",
+    "country_name": "Chile",
+    "parameter": "pm25",
+    "val_2019": 21.83,
+    "val_2020": 15.9,
+    "variation_pct": -27.2
+  },
+  {
+    "country_code": "CL",
+    "country_name": "Chile",
+    "parameter": "pm10",
+    "val_2019": 52.22,
+    "val_2020": 44.37,
+    "variation_pct": -15.0
+  },
+  {
+    "country_code": "CL",
+    "country_name": "Chile",
+    "parameter": "no2",
+    "val_2019": 27.81,
+    "val_2020": 18.26,
+    "variation_pct": -34.3
+  },
+  {
+    "country_code": "CN",
+    "country_name": "China",
+    "parameter": "pm25",
+    "val_2019": 36.4,
+    "val_2020": 32.01,
+    "variation_pct": -12.1
+  },
+  {
+    "country_code": "CN",
+    "country_name": "China",
+    "parameter": "pm10",
+    "val_2019": 53.78,
+    "val_2020": 46.35,
+    "variation_pct": -13.8
+  },
+  {
+    "country_code": "CN",
+    "country_name": "China",
+    "parameter": "no2",
+    "val_2019": 27.16,
+    "val_2020": 26.06,
+    "variation_pct": -4.1
+  },
+  {
+    "country_code": "CW",
+    "country_name": "Curaçao",
+    "parameter": "pm25",
+    "val_2019": 6.22,
+    "val_2020": 9.43,
+    "variation_pct": 51.6
+  },
+  {
+    "country_code": "CZ",
+    "country_name": "Czech Republic",
+    "parameter": "pm25",
+    "val_2019": 8.94,
+    "val_2020": 15.64,
+    "variation_pct": 74.9
+  },
+  {
+    "country_code": "CZ",
+    "country_name": "Czech Republic",
+    "parameter": "pm10",
+    "val_2019": 13.14,
+    "val_2020": 20.07,
+    "variation_pct": 52.7
+  },
+  {
+    "country_code": "CZ",
+    "country_name": "Czech Republic",
+    "parameter": "no2",
+    "val_2019": 8.82,
+    "val_2020": 11.64,
+    "variation_pct": 32.0
+  },
+  {
+    "country_code": "DE",
+    "country_name": "Germany",
+    "parameter": "pm25",
+    "val_2019": 9.16,
+    "val_2020": 10.15,
+    "variation_pct": 10.8
+  },
+  {
+    "country_code": "DE",
+    "country_name": "Germany",
+    "parameter": "pm10",
+    "val_2019": 14.15,
+    "val_2020": 14.6,
+    "variation_pct": 3.2
+  },
+  {
+    "country_code": "DE",
+    "country_name": "Germany",
+    "parameter": "no2",
+    "val_2019": 16.44,
+    "val_2020": 13.74,
+    "variation_pct": -16.4
+  },
+  {
+    "country_code": "DK",
+    "country_name": "Denmark",
+    "parameter": "no2",
+    "val_2019": 1.95,
+    "val_2020": 6.06,
+    "variation_pct": 210.8
+  },
+  {
+    "country_code": "ES",
+    "country_name": "Spain",
+    "parameter": "pm25",
+    "val_2019": 3.26,
+    "val_2020": 9.84,
+    "variation_pct": 201.8
+  },
+  {
+    "country_code": "ES",
+    "country_name": "Spain",
+    "parameter": "pm10",
+    "val_2019": 5.11,
+    "val_2020": 13.5,
+    "variation_pct": 164.2
+  },
+  {
+    "country_code": "ES",
+    "country_name": "Spain",
+    "parameter": "no2",
+    "val_2019": 6.73,
+    "val_2020": 15.26,
+    "variation_pct": 126.7
+  },
+  {
+    "country_code": "ET",
+    "country_name": "Ethiopia",
+    "parameter": "pm25",
+    "val_2019": 12.86,
+    "val_2020": 19.29,
+    "variation_pct": 50.0
+  },
+  {
+    "country_code": "FI",
+    "country_name": "Finland",
+    "parameter": "pm25",
+    "val_2019": 3.51,
+    "val_2020": 6.32,
+    "variation_pct": 80.1
+  },
+  {
+    "country_code": "FI",
+    "country_name": "Finland",
+    "parameter": "pm10",
+    "val_2019": 7.65,
+    "val_2020": 10.98,
+    "variation_pct": 43.5
+  },
+  {
+    "country_code": "FI",
+    "country_name": "Finland",
+    "parameter": "no2",
+    "val_2019": 5.52,
+    "val_2020": 4.22,
+    "variation_pct": -23.6
+  },
+  {
+    "country_code": "FR",
+    "country_name": "France",
+    "parameter": "pm25",
+    "val_2019": 8.74,
+    "val_2020": 10.51,
+    "variation_pct": 20.3
+  },
+  {
+    "country_code": "FR",
+    "country_name": "France",
+    "parameter": "pm10",
+    "val_2019": 15.18,
+    "val_2020": 13.12,
+    "variation_pct": -13.6
+  },
+  {
+    "country_code": "FR",
+    "country_name": "France",
+    "parameter": "no2",
+    "val_2019": 15.02,
+    "val_2020": 12.62,
+    "variation_pct": -16.0
+  },
+  {
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "parameter": "pm25",
+    "val_2019": 9.33,
+    "val_2020": 6.46,
+    "variation_pct": -30.8
+  },
+  {
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "parameter": "pm10",
+    "val_2019": 15.37,
+    "val_2020": 11.14,
+    "variation_pct": -27.5
+  },
+  {
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "parameter": "no2",
+    "val_2019": 25.93,
+    "val_2020": 18.93,
+    "variation_pct": -27.0
+  },
+  {
+    "country_code": "HK",
+    "country_name": "Hong Kong",
+    "parameter": "pm25",
+    "val_2019": 22.93,
+    "val_2020": 16.05,
+    "variation_pct": -30.0
+  },
+  {
+    "country_code": "HK",
+    "country_name": "Hong Kong",
+    "parameter": "pm10",
+    "val_2019": 35.35,
+    "val_2020": 24.67,
+    "variation_pct": -30.2
+  },
+  {
+    "country_code": "HK",
+    "country_name": "Hong Kong",
+    "parameter": "no2",
+    "val_2019": 47.83,
+    "val_2020": 38.29,
+    "variation_pct": -19.9
+  },
+  {
+    "country_code": "HR",
+    "country_name": "Croatia",
+    "parameter": "pm25",
+    "val_2019": 10.27,
+    "val_2020": 12.56,
+    "variation_pct": 22.3
+  },
+  {
+    "country_code": "HR",
+    "country_name": "Croatia",
+    "parameter": "pm10",
+    "val_2019": 18.41,
+    "val_2020": 18.52,
+    "variation_pct": 0.6
+  },
+  {
+    "country_code": "HR",
+    "country_name": "Croatia",
+    "parameter": "no2",
+    "val_2019": 13.1,
+    "val_2020": 7.87,
+    "variation_pct": -39.9
+  },
+  {
+    "country_code": "HU",
+    "country_name": "Hungary",
+    "parameter": "pm25",
+    "val_2019": 12.51,
+    "val_2020": 11.0,
+    "variation_pct": -12.1
+  },
+  {
+    "country_code": "HU",
+    "country_name": "Hungary",
+    "parameter": "pm10",
+    "val_2019": 24.0,
+    "val_2020": 26.86,
+    "variation_pct": 11.9
+  },
+  {
+    "country_code": "HU",
+    "country_name": "Hungary",
+    "parameter": "no2",
+    "val_2019": 15.5,
+    "val_2020": 15.6,
+    "variation_pct": 0.6
+  },
+  {
+    "country_code": "ID",
+    "country_name": "Indonesia",
+    "parameter": "pm25",
+    "val_2019": 39.3,
+    "val_2020": 32.62,
+    "variation_pct": -17.0
+  },
+  {
+    "country_code": "IE",
+    "country_name": "Ireland",
+    "parameter": "pm25",
+    "val_2019": 5.47,
+    "val_2020": 5.95,
+    "variation_pct": 8.8
+  },
+  {
+    "country_code": "IE",
+    "country_name": "Ireland",
+    "parameter": "pm10",
+    "val_2019": 8.41,
+    "val_2020": 11.08,
+    "variation_pct": 31.7
+  },
+  {
+    "country_code": "IE",
+    "country_name": "Ireland",
+    "parameter": "no2",
+    "val_2019": 13.78,
+    "val_2020": 10.66,
+    "variation_pct": -22.6
+  },
+  {
+    "country_code": "IN",
+    "country_name": "India",
+    "parameter": "pm25",
+    "val_2019": 59.84,
+    "val_2020": 66.83,
+    "variation_pct": 11.7
+  },
+  {
+    "country_code": "IN",
+    "country_name": "India",
+    "parameter": "pm10",
+    "val_2019": 47.54,
+    "val_2020": 70.91,
+    "variation_pct": 49.2
+  },
+  {
+    "country_code": "IN",
+    "country_name": "India",
+    "parameter": "no2",
+    "val_2019": 10.56,
+    "val_2020": 26.35,
+    "variation_pct": 149.5
+  },
+  {
+    "country_code": "IT",
+    "country_name": "Italy",
+    "parameter": "pm25",
+    "val_2019": 11.71,
+    "val_2020": 7.75,
+    "variation_pct": -33.8
+  },
+  {
+    "country_code": "IT",
+    "country_name": "Italy",
+    "parameter": "pm10",
+    "val_2019": 17.35,
+    "val_2020": 17.06,
+    "variation_pct": -1.7
+  },
+  {
+    "country_code": "IT",
+    "country_name": "Italy",
+    "parameter": "no2",
+    "val_2019": 22.34,
+    "val_2020": 20.04,
+    "variation_pct": -10.3
+  },
+  {
+    "country_code": "KW",
+    "country_name": "Kuwait",
+    "parameter": "pm25",
+    "val_2019": 54.74,
+    "val_2020": 41.63,
+    "variation_pct": -23.9
+  },
+  {
+    "country_code": "KZ",
+    "country_name": "Kazakhstan",
+    "parameter": "pm25",
+    "val_2019": 46.11,
+    "val_2020": 15.41,
+    "variation_pct": -66.6
+  },
+  {
+    "country_code": "LK",
+    "country_name": "Sri Lanka",
+    "parameter": "pm25",
+    "val_2019": 20.8,
+    "val_2020": 17.18,
+    "variation_pct": -17.4
+  },
+  {
+    "country_code": "LT",
+    "country_name": "Lithuania",
+    "parameter": "pm25",
+    "val_2019": 6.26,
+    "val_2020": 12.87,
+    "variation_pct": 105.6
+  },
+  {
+    "country_code": "LT",
+    "country_name": "Lithuania",
+    "parameter": "pm10",
+    "val_2019": 9.82,
+    "val_2020": 24.75,
+    "variation_pct": 152.0
+  },
+  {
+    "country_code": "LT",
+    "country_name": "Lithuania",
+    "parameter": "no2",
+    "val_2019": 5.86,
+    "val_2020": 12.52,
+    "variation_pct": 113.7
+  },
+  {
+    "country_code": "LU",
+    "country_name": "Luxembourg",
+    "parameter": "pm25",
+    "val_2019": 7.69,
+    "val_2020": 9.25,
+    "variation_pct": 20.3
+  },
+  {
+    "country_code": "LU",
+    "country_name": "Luxembourg",
+    "parameter": "pm10",
+    "val_2019": 16.28,
+    "val_2020": 15.34,
+    "variation_pct": -5.8
+  },
+  {
+    "country_code": "LU",
+    "country_name": "Luxembourg",
+    "parameter": "no2",
+    "val_2019": 15.7,
+    "val_2020": 13.25,
+    "variation_pct": -15.6
+  },
+  {
+    "country_code": "MK",
+    "country_name": "North Macedonia",
+    "parameter": "pm25",
+    "val_2019": 22.85,
+    "val_2020": 30.98,
+    "variation_pct": 35.6
+  },
+  {
+    "country_code": "MK",
+    "country_name": "North Macedonia",
+    "parameter": "pm10",
+    "val_2019": 34.06,
+    "val_2020": 42.49,
+    "variation_pct": 24.8
+  },
+  {
+    "country_code": "MK",
+    "country_name": "North Macedonia",
+    "parameter": "no2",
+    "val_2019": 16.23,
+    "val_2020": 14.76,
+    "variation_pct": -9.1
+  },
+  {
+    "country_code": "MT",
+    "country_name": "Malta",
+    "parameter": "pm25",
+    "val_2019": 11.5,
+    "val_2020": 12.48,
+    "variation_pct": 8.5
+  },
+  {
+    "country_code": "MT",
+    "country_name": "Malta",
+    "parameter": "pm10",
+    "val_2019": 22.78,
+    "val_2020": 29.59,
+    "variation_pct": 29.9
+  },
+  {
+    "country_code": "MT",
+    "country_name": "Malta",
+    "parameter": "no2",
+    "val_2019": 15.16,
+    "val_2020": 9.65,
+    "variation_pct": -36.3
+  },
+  {
+    "country_code": "MX",
+    "country_name": "Mexico",
+    "parameter": "pm25",
+    "val_2019": 17.21,
+    "val_2020": 17.88,
+    "variation_pct": 3.9
+  },
+  {
+    "country_code": "MX",
+    "country_name": "Mexico",
+    "parameter": "pm10",
+    "val_2019": 34.72,
+    "val_2020": 35.16,
+    "variation_pct": 1.3
+  },
+  {
+    "country_code": "MX",
+    "country_name": "Mexico",
+    "parameter": "no2",
+    "val_2019": 0.02,
+    "val_2020": 0.02,
+    "variation_pct": 0.0
+  },
+  {
+    "country_code": "NL",
+    "country_name": "Netherlands",
+    "parameter": "pm25",
+    "val_2019": 6.66,
+    "val_2020": 8.06,
+    "variation_pct": 21.0
+  },
+  {
+    "country_code": "NL",
+    "country_name": "Netherlands",
+    "parameter": "pm10",
+    "val_2019": 14.97,
+    "val_2020": 14.79,
+    "variation_pct": -1.2
+  },
+  {
+    "country_code": "NL",
+    "country_name": "Netherlands",
+    "parameter": "no2",
+    "val_2019": 9.53,
+    "val_2020": 12.94,
+    "variation_pct": 35.8
+  },
+  {
+    "country_code": "NO",
+    "country_name": "Norway",
+    "parameter": "pm25",
+    "val_2019": 6.65,
+    "val_2020": 8.13,
+    "variation_pct": 22.3
+  },
+  {
+    "country_code": "NO",
+    "country_name": "Norway",
+    "parameter": "pm10",
+    "val_2019": 15.04,
+    "val_2020": 17.09,
+    "variation_pct": 13.6
+  },
+  {
+    "country_code": "NO",
+    "country_name": "Norway",
+    "parameter": "no2",
+    "val_2019": 20.81,
+    "val_2020": 10.67,
+    "variation_pct": -48.7
+  },
+  {
+    "country_code": "NP",
+    "country_name": "Nepal",
+    "parameter": "pm25",
+    "val_2019": 46.12,
+    "val_2020": 46.56,
+    "variation_pct": 1.0
+  },
+  {
+    "country_code": "PR",
+    "country_name": "Puerto Rico",
+    "parameter": "pm25",
+    "val_2019": 10.76,
+    "val_2020": 4.1,
+    "variation_pct": -61.9
+  },
+  {
+    "country_code": "PR",
+    "country_name": "Puerto Rico",
+    "parameter": "pm10",
+    "val_2019": 36.86,
+    "val_2020": 15.4,
+    "variation_pct": -58.2
+  },
+  {
+    "country_code": "PT",
+    "country_name": "Portugal",
+    "parameter": "pm25",
+    "val_2019": 3.43,
+    "val_2020": 5.42,
+    "variation_pct": 58.0
+  },
+  {
+    "country_code": "PT",
+    "country_name": "Portugal",
+    "parameter": "pm10",
+    "val_2019": 9.41,
+    "val_2020": 11.18,
+    "variation_pct": 18.8
+  },
+  {
+    "country_code": "PT",
+    "country_name": "Portugal",
+    "parameter": "no2",
+    "val_2019": 10.43,
+    "val_2020": 8.55,
+    "variation_pct": -18.0
+  },
+  {
+    "country_code": "RS",
+    "country_name": "Serbia",
+    "parameter": "pm25",
+    "val_2019": 18.85,
+    "val_2020": 31.71,
+    "variation_pct": 68.2
+  },
+  {
+    "country_code": "RS",
+    "country_name": "Serbia",
+    "parameter": "pm10",
+    "val_2019": 34.11,
+    "val_2020": 40.0,
+    "variation_pct": 17.3
+  },
+  {
+    "country_code": "RS",
+    "country_name": "Serbia",
+    "parameter": "no2",
+    "val_2019": 18.8,
+    "val_2020": 15.54,
+    "variation_pct": -17.3
+  },
+  {
+    "country_code": "RU",
+    "country_name": "Russian Federation",
+    "parameter": "pm25",
+    "val_2019": 14.05,
+    "val_2020": 16.22,
+    "variation_pct": 15.4
+  },
+  {
+    "country_code": "RU",
+    "country_name": "Russian Federation",
+    "parameter": "pm10",
+    "val_2019": 37.2,
+    "val_2020": 32.44,
+    "variation_pct": -12.8
+  },
+  {
+    "country_code": "RU",
+    "country_name": "Russian Federation",
+    "parameter": "no2",
+    "val_2019": 11.12,
+    "val_2020": 11.26,
+    "variation_pct": 1.3
+  },
+  {
+    "country_code": "SK",
+    "country_name": "Slovakia",
+    "parameter": "pm25",
+    "val_2019": 12.51,
+    "val_2020": 17.65,
+    "variation_pct": 41.1
+  },
+  {
+    "country_code": "SK",
+    "country_name": "Slovakia",
+    "parameter": "pm10",
+    "val_2019": 19.69,
+    "val_2020": 23.63,
+    "variation_pct": 20.0
+  },
+  {
+    "country_code": "SK",
+    "country_name": "Slovakia",
+    "parameter": "no2",
+    "val_2019": 17.3,
+    "val_2020": 16.72,
+    "variation_pct": -3.4
+  },
+  {
+    "country_code": "SM",
+    "country_name": "San Marino",
+    "parameter": "pm10",
+    "val_2019": 18.65,
+    "val_2020": 17.5,
+    "variation_pct": -6.2
+  },
+  {
+    "country_code": "SM",
+    "country_name": "San Marino",
+    "parameter": "no2",
+    "val_2019": 4.97,
+    "val_2020": 4.64,
+    "variation_pct": -6.6
+  },
+  {
+    "country_code": "TH",
+    "country_name": "Thailand",
+    "parameter": "pm10",
+    "val_2019": 45.67,
+    "val_2020": 41.08,
+    "variation_pct": -10.1
+  },
+  {
+    "country_code": "TH",
+    "country_name": "Thailand",
+    "parameter": "no2",
+    "val_2019": 0.02,
+    "val_2020": 0.01,
+    "variation_pct": -50.0
+  },
+  {
+    "country_code": "TW",
+    "country_name": "Taiwan",
+    "parameter": "pm25",
+    "val_2019": 18.04,
+    "val_2020": 14.62,
+    "variation_pct": -19.0
+  },
+  {
+    "country_code": "TW",
+    "country_name": "Taiwan",
+    "parameter": "pm10",
+    "val_2019": 32.25,
+    "val_2020": 27.32,
+    "variation_pct": -15.3
+  },
+  {
+    "country_code": "TW",
+    "country_name": "Taiwan",
+    "parameter": "no2",
+    "val_2019": 0.01,
+    "val_2020": 0.01,
+    "variation_pct": 0.0
+  },
+  {
+    "country_code": "UG",
+    "country_name": "Uganda",
+    "parameter": "pm25",
+    "val_2019": 55.5,
+    "val_2020": 53.69,
+    "variation_pct": -3.3
+  },
+  {
+    "country_code": "US",
+    "country_name": "United States",
+    "parameter": "pm25",
+    "val_2019": 8.51,
+    "val_2020": 8.96,
+    "variation_pct": 5.3
+  },
+  {
+    "country_code": "US",
+    "country_name": "United States",
+    "parameter": "pm10",
+    "val_2019": 22.21,
+    "val_2020": 23.78,
+    "variation_pct": 7.1
+  },
+  {
+    "country_code": "US",
+    "country_name": "United States",
+    "parameter": "no2",
+    "val_2019": 0.01,
+    "val_2020": 0.01,
+    "variation_pct": 0.0
+  },
+  {
+    "country_code": "AF",
+    "country_name": "Afghanistan",
+    "parameter": "pm25",
+    "val_2019": 57.59,
+    "val_2020": 43.48,
+    "variation_pct": -24.5
+  },
+  {
+    "country_code": "CR",
+    "country_name": "Costa Rica",
+    "parameter": "pm25",
+    "val_2019": 10.16,
+    "val_2020": 8.83,
+    "variation_pct": -13.1
+  },
+  {
+    "country_code": "DZ",
+    "country_name": "Algeria",
+    "parameter": "pm25",
+    "val_2019": 24.51,
+    "val_2020": 21.08,
+    "variation_pct": -14.0
+  },
+  {
+    "country_code": "GT",
+    "country_name": "Guatemala",
+    "parameter": "pm25",
+    "val_2019": 16.64,
+    "val_2020": 19.94,
+    "variation_pct": 19.8
+  },
+  {
+    "country_code": "IQ",
+    "country_name": "Iraq",
+    "parameter": "pm25",
+    "val_2019": 26.61,
+    "val_2020": 44.44,
+    "variation_pct": 67.0
+  },
+  {
+    "country_code": "JO",
+    "country_name": "Jordan",
+    "parameter": "pm25",
+    "val_2019": 22.31,
+    "val_2020": 18.24,
+    "variation_pct": -18.2
+  },
+  {
+    "country_code": "KG",
+    "country_name": "Kyrgyzstan",
+    "parameter": "pm25",
+    "val_2019": 24.9,
+    "val_2020": 18.91,
+    "variation_pct": -24.1
+  },
+  {
+    "country_code": "LA",
+    "country_name": "Lao PDR",
+    "parameter": "pm25",
+    "val_2019": 23.61,
+    "val_2020": 22.71,
+    "variation_pct": -3.8
+  },
+  {
+    "country_code": "MM",
+    "country_name": "Myanmar",
+    "parameter": "pm25",
+    "val_2019": 8.89,
+    "val_2020": 28.32,
+    "variation_pct": 218.6
+  },
+  {
+    "country_code": "NG",
+    "country_name": "Nigeria",
+    "parameter": "pm25",
+    "val_2019": 3.7,
+    "val_2020": 204.68,
+    "variation_pct": 5431.9
+  },
+  {
+    "country_code": "PK",
+    "country_name": "Pakistan",
+    "parameter": "pm25",
+    "val_2019": 47.91,
+    "val_2020": 65.05,
+    "variation_pct": 35.8
+  },
+  {
+    "country_code": "PL",
+    "country_name": "Poland",
+    "parameter": "pm25",
+    "val_2019": 11.88,
+    "val_2020": 14.83,
+    "variation_pct": 24.8
+  },
+  {
+    "country_code": "PL",
+    "country_name": "Poland",
+    "parameter": "pm10",
+    "val_2019": 20.93,
+    "val_2020": 24.91,
+    "variation_pct": 19.0
+  },
+  {
+    "country_code": "PL",
+    "country_name": "Poland",
+    "parameter": "no2",
+    "val_2019": 11.35,
+    "val_2020": 15.34,
+    "variation_pct": 35.2
+  },
+  {
+    "country_code": "SA",
+    "country_name": "Saudi Arabia",
+    "parameter": "pm25",
+    "val_2019": 30.2,
+    "val_2020": 34.77,
+    "variation_pct": 15.1
+  },
+  {
+    "country_code": "TJ",
+    "country_name": "Tajikistan",
+    "parameter": "pm25",
+    "val_2019": 41.99,
+    "val_2020": 32.1,
+    "variation_pct": -23.6
+  },
+  {
+    "country_code": "TM",
+    "country_name": "Turkmenistan",
+    "parameter": "pm25",
+    "val_2019": 17.51,
+    "val_2020": 15.51,
+    "variation_pct": -11.4
+  },
+  {
+    "country_code": "UZ",
+    "country_name": "Uzbekistan",
+    "parameter": "pm25",
+    "val_2019": 38.02,
+    "val_2020": 28.27,
+    "variation_pct": -25.6
+  },
+  {
+    "country_code": "XK",
+    "country_name": "Kosovo",
+    "parameter": "pm25",
+    "val_2019": 17.44,
+    "val_2020": 22.94,
+    "variation_pct": 31.5
+  },
+  {
+    "country_code": "XK",
+    "country_name": "Kosovo",
+    "parameter": "pm10",
+    "val_2019": 24.81,
+    "val_2020": 30.25,
+    "variation_pct": 21.9
+  },
+  {
+    "country_code": "XK",
+    "country_name": "Kosovo",
+    "parameter": "no2",
+    "val_2019": 28.85,
+    "val_2020": 16.96,
+    "variation_pct": -41.2
+  }
+]

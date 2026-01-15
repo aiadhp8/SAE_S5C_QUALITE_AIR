@@ -1,0 +1,182 @@
+[
+  {
+    "variable": "sante_SP_DYN_LE00_IN",
+    "importance": 0.2387486033549991
+  },
+  {
+    "variable": "sante_SH_XPD_CHEX_GD_ZS",
+    "importance": 0.107778795965927
+  },
+  {
+    "variable": "eco_NV_AGR_TOTL_ZS",
+    "importance": 0.0935312365379374
+  },
+  {
+    "variable": "sante_SH_XPD_CHEX_PC_CD",
+    "importance": 0.0505405520270012
+  },
+  {
+    "variable": "eco_NV_SRV_TOTL_ZS",
+    "importance": 0.0471452146742635
+  },
+  {
+    "variable": "demo_SP_URB_TOTL",
+    "importance": 0.0443623323469333
+  },
+  {
+    "variable": "eco_SL_SRV_EMPL_ZS",
+    "importance": 0.039279353775099
+  },
+  {
+    "variable": "demo_SP_POP_TOTL",
+    "importance": 0.0352794920528627
+  },
+  {
+    "variable": "eco_SL_AGR_EMPL_ZS",
+    "importance": 0.0341833909757367
+  },
+  {
+    "variable": "sante_SH_STA_AIRP_P5",
+    "importance": 0.0316144298965529
+  },
+  {
+    "variable": "population_urbaine_totale",
+    "importance": 0.0272961748062657
+  },
+  {
+    "variable": "energie_EG_ELC_PETR_ZS",
+    "importance": 0.0229329788394118
+  },
+  {
+    "variable": "sante_EN_ATM_PM25_MC_M3",
+    "importance": 0.0224955184460764
+  },
+  {
+    "variable": "eco_NY_GDP_PCAP_CD",
+    "importance": 0.019738719457198
+  },
+  {
+    "variable": "demo_SP_URB_TOTL_IN_ZS",
+    "importance": 0.0170124255599008
+  },
+  {
+    "variable": "longitude_moyenne",
+    "importance": 0.0163188154640676
+  },
+  {
+    "variable": "energie_EG_ELC_NGAS_ZS",
+    "importance": 0.0137189537198413
+  },
+  {
+    "variable": "demo_EN_URB_LCTY",
+    "importance": 0.0130677749042467
+  },
+  {
+    "variable": "energie_EG_USE_ELEC_KH_PC",
+    "importance": 0.011444508216237
+  },
+  {
+    "variable": "eco_NY_GDP_PCAP_PP_CD",
+    "importance": 0.0105590270063998
+  },
+  {
+    "variable": "population_ville_moyenne",
+    "importance": 0.0105357420192149
+  },
+  {
+    "variable": "demo_AG_LND_FRST_ZS",
+    "importance": 0.0095925803450743
+  },
+  {
+    "variable": "energie_EG_ELC_COAL_ZS",
+    "importance": 0.0080417818301573
+  },
+  {
+    "variable": "demo_EN_POP_DNST",
+    "importance": 0.007215927258591
+  },
+  {
+    "variable": "eco_SL_IND_EMPL_ZS",
+    "importance": 0.0068025010047068
+  },
+  {
+    "variable": "transport_IS_RRS_TOTL_KM",
+    "importance": 0.0066216745586349
+  },
+  {
+    "variable": "energie_EG_ELC_RNWX_ZS",
+    "importance": 0.0048530674099345
+  },
+  {
+    "variable": "eco_NV_IND_TOTL_ZS",
+    "importance": 0.0048005484819507
+  },
+  {
+    "variable": "energie_EG_USE_PCAP_KG_OE",
+    "importance": 0.0047651726424742
+  },
+  {
+    "variable": "demo_SP_URB_GROW",
+    "importance": 0.0046442901812132
+  },
+  {
+    "variable": "latitude_moyenne",
+    "importance": 0.0046297617814256
+  },
+  {
+    "variable": "energie_EG_ELC_FOSL_ZS",
+    "importance": 0.0045187970258393
+  },
+  {
+    "variable": "transport_IS_AIR_DPRT",
+    "importance": 0.0042671974722086
+  },
+  {
+    "variable": "demo_EN_URB_LCTY_UR_ZS",
+    "importance": 0.0035684716427926
+  },
+  {
+    "variable": "nb_villes",
+    "importance": 0.0030378093331339
+  },
+  {
+    "variable": "population_ville_max",
+    "importance": 0.0029462402060209
+  },
+  {
+    "variable": "energie_EG_ELC_NUCL_ZS",
+    "importance": 0.0028727734289076
+  },
+  {
+    "variable": "energie_EG_FEC_RNEW_ZS",
+    "importance": 0.0027806360738402
+  },
+  {
+    "variable": "eco_NV_IND_MANF_ZS",
+    "importance": 0.0024968197551028
+  },
+  {
+    "variable": "demo_AG_SRF_TOTL_K2",
+    "importance": 0.0018960055393787
+  },
+  {
+    "variable": "transport_IS_AIR_PSGR",
+    "importance": 0.0009210064352882
+  },
+  {
+    "variable": "demo_AG_LND_TOTL_K2",
+    "importance": 0.000743683231348
+  },
+  {
+    "variable": "nb_polluants_disponibles",
+    "importance": 0.0002459545756773
+  },
+  {
+    "variable": "score_qualite",
+    "importance": 0.0001109411807329
+  },
+  {
+    "variable": "donnees_completes",
+    "importance": 4.231855939167257e-05
+  }
+]

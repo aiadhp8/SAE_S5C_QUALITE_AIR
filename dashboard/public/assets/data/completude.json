@@ -1,0 +1,50 @@
+[
+  {
+    "axe": "pollution",
+    "nb_indicateurs": 6,
+    "pays_complets": 38,
+    "pays_partiels": 94,
+    "pct_complets": 40.42553191489361,
+    "pct_partiels": 100.0
+  },
+  {
+    "axe": "transport",
+    "nb_indicateurs": 3,
+    "pays_complets": 52,
+    "pays_partiels": 85,
+    "pct_complets": 55.319148936170215,
+    "pct_partiels": 90.42553191489364
+  },
+  {
+    "axe": "energie",
+    "nb_indicateurs": 9,
+    "pays_complets": 79,
+    "pays_partiels": 92,
+    "pct_complets": 84.04255319148936,
+    "pct_partiels": 97.87234042553192
+  },
+  {
+    "axe": "economie",
+    "nb_indicateurs": 9,
+    "pays_complets": 85,
+    "pays_partiels": 93,
+    "pct_complets": 90.42553191489364,
+    "pct_partiels": 98.93617021276596
+  },
+  {
+    "axe": "demographie",
+    "nb_indicateurs": 10,
+    "pays_complets": 82,
+    "pays_partiels": 93,
+    "pct_complets": 87.2340425531915,
+    "pct_partiels": 98.93617021276596
+  },
+  {
+    "axe": "sante",
+    "nb_indicateurs": 5,
+    "pays_complets": 84,
+    "pays_partiels": 93,
+    "pct_complets": 89.36170212765957,
+    "pct_partiels": 98.93617021276596
+  }
+]

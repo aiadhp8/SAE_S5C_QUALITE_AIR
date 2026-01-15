@@ -1,0 +1,56 @@
+[
+  {
+    "polluant": "pm25",
+    "pente_annuelle": -0.612,
+    "variation_pct": -2.61,
+    "r2": 0.576,
+    "p_value": 0.08,
+    "tendance": "baisse",
+    "significatif": "non"
+  },
+  {
+    "polluant": "pm10",
+    "pente_annuelle": -1.144,
+    "variation_pct": -3.55,
+    "r2": 0.495,
+    "p_value": 0.1186,
+    "tendance": "baisse",
+    "significatif": "non"
+  },
+  {
+    "polluant": "no2",
+    "pente_annuelle": -0.732,
+    "variation_pct": -4.39,
+    "r2": 0.614,
+    "p_value": 0.0652,
+    "tendance": "baisse",
+    "significatif": "non"
+  },
+  {
+    "polluant": "o3",
+    "pente_annuelle": 0.751,
+    "variation_pct": 2.13,
+    "r2": 0.267,
+    "p_value": 0.2938,
+    "tendance": "hausse",
+    "significatif": "non"
+  },
+  {
+    "polluant": "so2",
+    "pente_annuelle": -0.207,
+    "variation_pct": -3.74,
+    "r2": 0.384,
+    "p_value": 0.1891,
+    "tendance": "baisse",
+    "significatif": "non"
+  },
+  {
+    "polluant": "co",
+    "pente_annuelle": 0.195,
+    "variation_pct": 0.06,
+    "r2": 0.0,
+    "p_value": 0.9742,
+    "tendance": "hausse",
+    "significatif": "non"
+  }
+]
