@@ -5,6 +5,7 @@ import {
   Country,
   PollutionData,
   Correlation,
+  PollutantCorrelation,
   TemporalGlobal,
   CovidImpact,
   ModelComparison,
@@ -145,5 +146,115 @@ export class DataService {
 
   getTopFeatures(count: number = 10): FeatureImportance[] {
     return this.featuresSubject.value.slice(0, count);
+  }
+
+  /**
+   * Calculate Spearman correlation between pollutants
+   * Returns a matrix of correlations between all pollutant pairs
+   */
+  getPollutantCorrelations(): PollutantCorrelation[] {
+    const pollutants: Pollutant[] = ['pm25', 'pm10', 'no2', 'o3', 'so2', 'co'];
+    const countries = this.countriesSubject.value;
+    const correlations: PollutantCorrelation[] = [];
+
+    for (const pollutant1 of pollutants) {
+      for (const pollutant2 of pollutants) {
+        const key1 = `pollution_${pollutant1}` as keyof Country;
+        const key2 = `pollution_${pollutant2}` as keyof Country;
+
+        // Get paired values (only where both pollutants have data)
+        const pairs = countries
+          .filter(c => c[key1] !== null && c[key2] !== null)
+          .map(c => ({
+            x: c[key1] as number,
+            y: c[key2] as number
+          }));
+
+        if (pairs.length < 10) {
+          correlations.push({
+            pollutant1,
+            pollutant2,
+            correlation: null,
+            n_observations: pairs.length,
+            significant: false
+          });
+          continue;
+        }
+
+        // Calculate Spearman correlation (rank-based)
+        const correlation = this.calculateSpearmanCorrelation(
+          pairs.map(p => p.x),
+          pairs.map(p => p.y)
+        );
+
+        // Approximate significance test (p < 0.05 for n > 10)
+        const t = correlation * Math.sqrt((pairs.length - 2) / (1 - correlation * correlation));
+        const significant = Math.abs(t) > 1.96;
+
+        correlations.push({
+          pollutant1,
+          pollutant2,
+          correlation,
+          n_observations: pairs.length,
+          significant
+        });
+      }
+    }
+
+    return correlations;
+  }
+
+  private calculateSpearmanCorrelation(x: number[], y: number[]): number {
+    const n = x.length;
+    if (n === 0) return 0;
+
+    // Rank the values
+    const rankX = this.rankArray(x);
+    const rankY = this.rankArray(y);
+
+    // Calculate Spearman correlation using ranked values
+    const meanX = rankX.reduce((a, b) => a + b, 0) / n;
+    const meanY = rankY.reduce((a, b) => a + b, 0) / n;
+
+    let numerator = 0;
+    let denomX = 0;
+    let denomY = 0;
+
+    for (let i = 0; i < n; i++) {
+      const dx = rankX[i] - meanX;
+      const dy = rankY[i] - meanY;
+      numerator += dx * dy;
+      denomX += dx * dx;
+      denomY += dy * dy;
+    }
+
+    const denominator = Math.sqrt(denomX * denomY);
+    if (denominator === 0) return 0;
+
+    return numerator / denominator;
+  }
+
+  private rankArray(arr: number[]): number[] {
+    const sorted = arr.map((val, idx) => ({ val, idx }))
+      .sort((a, b) => a.val - b.val);
+
+    const ranks = new Array(arr.length);
+    let i = 0;
+
+    while (i < sorted.length) {
+      let j = i;
+      // Find all elements with the same value (ties)
+      while (j < sorted.length && sorted[j].val === sorted[i].val) {
+        j++;
+      }
+      // Average rank for ties
+      const avgRank = (i + j + 1) / 2;
+      for (let k = i; k < j; k++) {
+        ranks[sorted[k].idx] = avgRank;
+      }
+      i = j;
+    }
+
+    return ranks;
   }
 }

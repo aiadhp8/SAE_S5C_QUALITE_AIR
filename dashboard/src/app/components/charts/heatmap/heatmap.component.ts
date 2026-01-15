@@ -14,11 +14,11 @@ export interface HeatmapCell {
   standalone: true,
   imports: [CommonModule, MatTooltipModule],
   template: `
-    <div class="heatmap-container">
+    <div class="heatmap-container" [class.centered]="centered">
       <div class="heatmap-wrapper">
         <!-- Column headers -->
         <div class="heatmap-row header-row">
-          <div class="heatmap-cell row-label"></div>
+          <div class="heatmap-cell row-label" [style.min-width.px]="rowLabelWidth"></div>
           @for (col of columns; track col) {
             <div class="heatmap-cell col-header"
                  [title]="col"
@@ -30,14 +30,21 @@ export interface HeatmapCell {
 
         <!-- Data rows -->
         @for (row of rows; track row) {
-          <div class="heatmap-row">
-            <div class="heatmap-cell row-label" [title]="row">{{ truncateLabel(row) }}</div>
+          <div class="heatmap-row" [class.row-highlighted]="row === highlightedRow">
+            <div class="heatmap-cell row-label"
+                 [style.min-width.px]="rowLabelWidth"
+                 [title]="row"
+                 [class.highlighted]="row === highlightedRow">
+              {{ row }}
+            </div>
             @for (col of columns; track col) {
               <div class="heatmap-cell data-cell"
                    [style.background-color]="getCellColor(row, col)"
                    [matTooltip]="getCellTooltip(row, col)"
                    [class.significant]="isCellSignificant(row, col)"
-                   [class.highlighted]="col === highlightedColumn">
+                   [class.highlighted]="col === highlightedColumn"
+                   [class.diagonal]="grayDiagonal && row === col"
+                   [class.row-highlighted]="row === highlightedRow">
                 {{ formatCellValue(row, col) }}
               </div>
             }
@@ -60,6 +67,14 @@ export interface HeatmapCell {
       gap: 16px;
     }
 
+    .heatmap-container.centered {
+      align-items: center;
+    }
+
+    .heatmap-container.centered .heatmap-wrapper {
+      display: inline-block;
+    }
+
     .heatmap-wrapper {
       overflow-x: auto;
     }
@@ -79,15 +94,18 @@ export interface HeatmapCell {
     }
 
     .row-label {
-      min-width: 120px;
       justify-content: flex-end;
       padding-right: 8px;
       background: #fafafa;
       font-weight: 500;
       color: #333;
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    }
+
+    .row-label.highlighted {
+      background: #333;
+      color: white;
+      font-weight: 700;
     }
 
     .col-header {
@@ -102,10 +120,6 @@ export interface HeatmapCell {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-
-    .header-row .heatmap-cell:first-child {
-      min-width: 120px;
     }
 
     .data-cell {
@@ -128,6 +142,18 @@ export interface HeatmapCell {
     }
 
     .data-cell.highlighted {
+      outline: 3px solid #000;
+      outline-offset: -3px;
+      z-index: 2;
+    }
+
+    .data-cell.diagonal {
+      background-color: #9e9e9e !important;
+      color: #666;
+      text-shadow: none;
+    }
+
+    .data-cell.row-highlighted {
       outline: 3px solid #000;
       outline-offset: -3px;
       z-index: 2;
@@ -170,6 +196,10 @@ export class HeatmapComponent implements OnChanges {
   @Input() rows: string[] = [];
   @Input() columns: string[] = [];
   @Input() highlightedColumn: string = '';
+  @Input() highlightedRow: string = '';
+  @Input() grayDiagonal: boolean = false;
+  @Input() centered: boolean = false;
+  @Input() rowLabelWidth: number = 120; // Width in pixels for row labels
 
   private dataMap = new Map<string, HeatmapCell>();
 

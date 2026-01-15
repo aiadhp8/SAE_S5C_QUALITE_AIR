@@ -7,7 +7,7 @@ import { FilterService } from '../../../services/filter.service';
 import { KpiCardComponent } from '../../kpi-card/kpi-card.component';
 import { HeatmapComponent, HeatmapCell } from '../../charts/heatmap/heatmap.component';
 import { ScatterChartComponent, ScatterPoint } from '../../charts/scatter-chart/scatter-chart.component';
-import { Correlation, Country, POLLUTANTS, Pollutant } from '../../../models/types';
+import { Correlation, Country, POLLUTANTS, Pollutant, PollutantCorrelation } from '../../../models/types';
 
 @Component({
   selector: 'app-facteurs',
@@ -58,15 +58,39 @@ import { Correlation, Country, POLLUTANTS, Pollutant } from '../../../models/typ
         </app-kpi-card>
       </div>
 
+      <!-- Pollutant Correlation Matrix -->
+      <div class="pollutant-correlation-section">
+        <div class="chart-card">
+          <h3 class="chart-title">Corrélations entre polluants</h3>
+          <p class="chart-subtitle">Matrice de corrélation de Spearman entre les 6 polluants mesurés</p>
+          <app-heatmap
+            [data]="pollutantHeatmapData"
+            [rows]="pollutantHeatmapLabels"
+            [columns]="pollutantHeatmapLabels"
+            [highlightedRow]="selectedPollutantLabel"
+            [grayDiagonal]="true"
+            [centered]="true">
+          </app-heatmap>
+          <div class="correlation-insight" *ngIf="strongestPollutantCorrelation">
+            <span class="insight-icon">💡</span>
+            <span class="insight-text">
+              Corrélation la plus forte : <strong>{{ strongestPollutantCorrelation.pair }}</strong>
+              (ρ = {{ strongestPollutantCorrelation.value.toFixed(3) }})
+            </span>
+          </div>
+        </div>
+      </div>
+
       <!-- Charts -->
       <div class="charts-container">
         <div class="chart-card">
-          <h3 class="chart-title">Matrice de corrélations</h3>
+          <h3 class="chart-title">Matrice de corrélations (Indicateurs socio-économiques)</h3>
           <app-heatmap
             [data]="heatmapData"
             [rows]="heatmapRows"
             [columns]="heatmapColumns"
-            [highlightedColumn]="selectedPollutantLabel">
+            [highlightedColumn]="selectedPollutantLabel"
+            [rowLabelWidth]="180">
           </app-heatmap>
         </div>
 
@@ -253,6 +277,43 @@ import { Correlation, Country, POLLUTANTS, Pollutant } from '../../../models/typ
       height: 300px;
     }
 
+    .pollutant-correlation-section {
+      margin-bottom: 24px;
+    }
+
+    .pollutant-correlation-section .chart-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .chart-subtitle {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      margin-top: -8px;
+    }
+
+    .correlation-insight {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 12px;
+      background: #e3f2fd;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .insight-icon {
+      font-size: 1.2rem;
+    }
+
+    .insight-text strong {
+      color: #1976d2;
+    }
+
     @media (max-width: 1024px) {
       .charts-container {
         grid-template-columns: 1fr;
@@ -276,6 +337,11 @@ export class FacteursComponent implements OnInit, OnDestroy {
   heatmapData: HeatmapCell[] = [];
   heatmapRows: string[] = [];
   heatmapColumns: string[] = [];
+
+  // Pollutant correlation heatmap
+  pollutantHeatmapData: HeatmapCell[] = [];
+  pollutantHeatmapLabels: string[] = [];
+  strongestPollutantCorrelation: { pair: string; value: number } | null = null;
 
   topCorrelations: Correlation[] = [];
   selectedIndicator = 'eco_NY_GDP_PCAP_CD';
@@ -335,6 +401,9 @@ export class FacteursComponent implements OnInit, OnDestroy {
     // Heatmap (indicators as rows, just one column for selected pollutant)
     this.buildHeatmap(filtered);
 
+    // Build pollutant correlation heatmap
+    this.buildPollutantHeatmap();
+
     // Update scatter
     this.updateScatter();
   }
@@ -375,6 +444,44 @@ export class FacteursComponent implements OnInit, OnDestroy {
 
     this.heatmapRows = indicators.map(i => this.formatIndicator(i));
     this.heatmapData = cells;
+  }
+
+  private buildPollutantHeatmap(): void {
+    const pollutantCorrelations = this.dataService.getPollutantCorrelations();
+
+    // Create labels (pollutant names)
+    this.pollutantHeatmapLabels = POLLUTANTS.map(p => p.label);
+
+    // Build cells for the heatmap
+    const cells: HeatmapCell[] = [];
+    let strongestCorr = { pair: '', value: 0 };
+
+    for (const corr of pollutantCorrelations) {
+      const pollutant1Info = POLLUTANTS.find(p => p.code === corr.pollutant1);
+      const pollutant2Info = POLLUTANTS.find(p => p.code === corr.pollutant2);
+
+      if (!pollutant1Info || !pollutant2Info) continue;
+
+      cells.push({
+        row: pollutant1Info.label,
+        col: pollutant2Info.label,
+        value: corr.correlation,
+        significant: corr.significant
+      });
+
+      // Track strongest correlation (excluding self-correlations)
+      if (corr.pollutant1 !== corr.pollutant2 && corr.correlation !== null) {
+        if (Math.abs(corr.correlation) > Math.abs(strongestCorr.value)) {
+          strongestCorr = {
+            pair: `${pollutant1Info.label} / ${pollutant2Info.label}`,
+            value: corr.correlation
+          };
+        }
+      }
+    }
+
+    this.pollutantHeatmapData = cells;
+    this.strongestPollutantCorrelation = strongestCorr.pair ? strongestCorr : null;
   }
 
   selectIndicator(indicator: string): void {

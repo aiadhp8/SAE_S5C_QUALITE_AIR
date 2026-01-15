@@ -74,8 +74,7 @@ import { Pollutant, POLLUTANTS } from '../../models/types';
       padding: 16px 24px;
       background: white;
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      margin-bottom: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
     }
 
     .filter-group {

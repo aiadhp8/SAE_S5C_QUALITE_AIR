@@ -45,7 +45,9 @@ import { DataService } from './services/data.service';
           <p class="team">Equipe Piltdown</p>
         </div>
 
-        <app-filter-bar></app-filter-bar>
+        <div class="filter-bar-container">
+          <app-filter-bar></app-filter-bar>
+        </div>
 
         <app-accueil></app-accueil>
         <app-tendances></app-tendances>
@@ -120,7 +122,17 @@ import { DataService } from './services/data.service';
       color: white;
       padding: 48px 32px;
       text-align: center;
-      margin-bottom: 24px;
+    }
+
+    .filter-bar-container {
+      position: sticky;
+      top: 64px;
+      z-index: 100;
+      background: #f5f7fa;
+      padding: 16px 24px;
+      margin: 0 -24px;
+      padding-left: 24px;
+      padding-right: 24px;
     }
 
     .hero-section h1 {

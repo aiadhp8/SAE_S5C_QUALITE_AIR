@@ -112,6 +112,14 @@ export interface Correlation {
   strength: string;
 }
 
+export interface PollutantCorrelation {
+  pollutant1: Pollutant;
+  pollutant2: Pollutant;
+  correlation: number | null;
+  n_observations: number;
+  significant: boolean;
+}
+
 export interface TemporalGlobal {
   polluant: string;
   pente_annuelle: number;
