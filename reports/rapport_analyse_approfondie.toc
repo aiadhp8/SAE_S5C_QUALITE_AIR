@@ -1,0 +1,54 @@
+\babel@toc {french}{}\relax 
+\contentsline {section}{Résumé Exécutif}{1}{Doc-Start}%
+\contentsline {section}{\numberline {1}Introduction et Contexte}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Problématique}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Objectifs de l'étude}{4}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Données et Méthodologie}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Sources de données}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Pipeline de données et effectifs}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Schéma de la base de données}{5}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Choix des polluants prioritaires}{7}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Choix des métriques statistiques}{8}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Contrôle qualité des données}{9}{subsection.2.6}%
+\contentsline {subsubsection}{\numberline {2.6.1}Détection et traitement des outliers}{9}{subsubsection.2.6.1}%
+\contentsline {subsubsection}{\numberline {2.6.2}Robustesse des classements}{10}{subsubsection.2.6.2}%
+\contentsline {section}{\numberline {3}Résultats Descriptifs}{10}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Panorama mondial de la pollution}{10}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Population et pollution}{11}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Analyse Temporelle (2018-2023)}{11}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Évolution globale par polluant}{11}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Évolution par région}{13}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Pays avec les plus fortes évolutions}{13}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Impact du COVID-19 (2019 vs 2020)}{14}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Tests d'Indépendance (Chi²)}{14}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Région vs Niveau de pollution}{15}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Impact COVID-19 vs Région}{15}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Tendance temporelle vs Région}{16}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Analyse des Corrélations Socio-économiques}{17}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Vue d'ensemble : matrice de corrélations}{17}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Le résultat central : PIB et qualité de l'air}{19}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Résultats contre-intuitifs}{20}{subsection.6.3}%
+\contentsline {subsubsection}{\numberline {6.3.1}Transport et pollution}{20}{subsubsection.6.3.1}%
+\contentsline {subsubsection}{\numberline {6.3.2}Urbanisation et pollution}{20}{subsubsection.6.3.2}%
+\contentsline {subsubsection}{\numberline {6.3.3}Industrie et pollution}{21}{subsubsection.6.3.3}%
+\contentsline {subsubsection}{\numberline {6.3.4}CO$_2$ et pollution locale}{22}{subsubsection.6.3.4}%
+\contentsline {section}{\numberline {7}Pollution et Santé}{22}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Espérance de vie et qualité de l'air}{22}{subsection.7.1}%
+\contentsline {section}{\numberline {8}Énergie et Pollution}{23}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Mix énergétique par pays}{23}{subsection.8.1}%
+\contentsline {section}{\numberline {9}Analyse en Composantes Principales}{25}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Regroupements des pays}{26}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Détection des outliers}{26}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Similarité entre pays}{27}{subsection.9.3}%
+\contentsline {section}{\numberline {10}Modélisation Prédictive}{27}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Données disponibles}{27}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Modèle simple : régression univariée avec validation leave-one-out}{28}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Recommandations pour améliorer la modélisation}{28}{subsection.10.3}%
+\contentsline {section}{\numberline {11}Discussion des Limites}{28}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Représentativité de l'échantillon}{29}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Avantages de l'accès AWS S3}{29}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Problème d'agrégation}{30}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Robustesse des résultats}{30}{subsection.11.4}%
+\contentsline {section}{\numberline {12}Conclusions et Recommandations}{30}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Conclusions principales}{31}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Recommandations}{31}{subsection.12.2}%

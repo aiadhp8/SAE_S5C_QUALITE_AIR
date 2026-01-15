@@ -1,0 +1,1056 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{pdflscape}  % Pour les pages en paysage
+
+% Chemin des figures (fonctionne depuis racine ou depuis reports/)
+\graphicspath{{figures/}{./figures/}{reports/figures/}{./reports/figures/}}
+
+% Configuration de la page
+\geometry{margin=2.5cm, top=3cm, bottom=3cm}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+% En-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{SAE S5.C.01}
+\lhead{Analyse de la Qualité de l'Air}
+\cfoot{\thepage}
+
+% Couleurs personnalisées
+\definecolor{darkblue}{RGB}{0,51,102}
+\definecolor{lightgray}{RGB}{245,245,245}
+
+% Configuration des titres
+\titleformat{\section}{\Large\bfseries\color{darkblue}}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\color{darkblue!80}}{\thesubsection}{1em}{}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=darkblue,
+    urlcolor=darkblue
+}
+
+\begin{document}
+
+% ============================================
+% PAGE DE TITRE
+% ============================================
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\LARGE\bfseries SAE S5.C.01\\[0.5cm]}
+{\Huge\bfseries\color{darkblue} Analyse Approfondie de la\\Qualité de l'Air Mondiale\\[1cm]}
+{\Large Caractéristiques urbaines et socio-économiques\\[2cm]}
+\vfill
+{\large\textit{Étude des relations entre pollution atmosphérique\\et indicateurs de développement}}\\[2cm]
+{\Large\bfseries Equipe Piltdown}\\[1cm]
+{\large Janvier 2026}\\[1cm]
+\vfill
+\end{titlepage}
+
+
+% ============================================
+% RÉSUMÉ EXÉCUTIF
+% ============================================
+\section*{Résumé Exécutif}
+\addcontentsline{toc}{section}{Résumé Exécutif}
+
+Cette étude analyse les relations entre la qualité de l'air et les caractéristiques socio-économiques à l'échelle mondiale. L'analyse porte sur \textbf{6 années de données (2018-2023)} couvrant \textbf{110 pays} avec des données de pollution atmosphérique (OpenAQ AWS S3) croisées avec \textbf{36 indicateurs} de la Banque Mondiale répartis en 5 axes thématiques.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}p{4.5cm}p{9cm}@{}}
+\toprule
+\textbf{Indicateur} & \textbf{Résultat} \\
+\midrule
+Couverture temporelle & 2018-2023 (6 années complètes) \\
+Couverture géographique & 110 pays, 6 polluants (PM2.5, PM10, NO$_2$, O$_3$, SO$_2$, CO) \\
+Axes thématiques & Transport, Énergie, Économie, Démographie, Santé \\
+Corrélation PIB-PM2.5 & $r = -0.65$ (p$<$0.001, n=98 pays) \\
+Pays les plus pollués & Mongolie (115 $\mu$g/m³), Tchad (86 $\mu$g/m³), Bangladesh (84 $\mu$g/m³) \\
+\bottomrule
+\end{tabular}
+\caption{Synthèse des principaux résultats}
+\end{table}
+
+\textbf{Conclusion principale :} L'analyse temporelle révèle une tendance globale à l'amélioration dans les pays développés, mais une stagnation voire dégradation dans certains pays en développement. L'effet COVID-19 a eu un impact visible mais temporaire sur la qualité de l'air.
+
+\clearpage
+\setcounter{tocdepth}{2}
+\renewcommand{\contentsname}{Table des Matières}
+\tableofcontents
+\clearpage
+
+% ============================================
+% INTRODUCTION
+% ============================================
+\section{Introduction et Contexte}
+
+\subsection{Problématique}
+
+La pollution atmosphérique constitue l'un des défis majeurs de santé publique du XXI\textsuperscript{e} siècle. Selon l'Organisation Mondiale de la Santé, elle est responsable de plus de 7 millions de décès prématurés par an. Comprendre les facteurs socio-économiques associés à cette pollution est essentiel pour orienter les politiques publiques.
+
+Cette étude vise à répondre à la question centrale : \textit{Quels sont les déterminants socio-économiques de la qualité de l'air à l'échelle nationale ?}
+
+\subsection{Objectifs de l'étude}
+
+\begin{enumerate}
+    \item Identifier les pays présentant les niveaux de pollution les plus critiques
+    \item Analyser les corrélations entre indicateurs économiques et qualité de l'air
+    \item Tester l'hypothèse de la courbe de Kuznets environnementale
+    \item Évaluer la capacité prédictive des modèles basés sur les variables socio-économiques
+    \item Identifier les limites méthodologiques de ce type d'analyse
+\end{enumerate}
+
+% ============================================
+% MÉTHODOLOGIE
+% ============================================
+\section{Données et Méthodologie}
+
+\subsection{Sources de données}
+
+L'étude s'appuie sur trois sources de données complémentaires :
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Source} & \textbf{Type} & \textbf{Granularité} & \textbf{Période} \\
+\midrule
+OpenAQ (AWS S3) & Pollution atmosphérique & Station $\rightarrow$ Pays & 2018-2023 \\
+World Bank API & Indicateurs socio-éco & Pays & 2018-2023 \\
+SimpleMaps & Données urbaines & Ville & 2024 \\
+\bottomrule
+\end{tabular}
+\caption{Sources de données utilisées}
+\end{table}
+
+\textbf{Note méthodologique :} Les données de pollution proviennent du bucket AWS S3 \texttt{openaq-data-archive} qui contient l'historique complet des mesures. Cette source permet une analyse temporelle sur 6 années, contrairement à l'API OpenAQ qui ne fournit que les mesures les plus récentes.
+
+\subsection{Pipeline de données et effectifs}
+
+La chaîne de traitement des données suit les étapes suivantes :
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}p{4cm}p{6cm}c@{}}
+\toprule
+\textbf{Étape} & \textbf{Description} & \textbf{n} \\
+\midrule
+1. Extraction stations & API OpenAQ v3 (métadonnées) & $\sim$45\,000 stations \\
+2. Échantillonnage & Max 10 stations/pays, 4 mois/an (jan, avr, jul, oct) & $\sim$800 stations \\
+3. Téléchargement S3 & Fichiers CSV compressés par station/année/mois & -- \\
+4. Filtrage valeurs & 0 $\leq$ valeur $\leq$ 5\,000 µg/m³ & -- \\
+5. Suppression outliers & Valeurs $>$ 3$\sigma$ de la moyenne & -- \\
+6. Agrégation pays & \textbf{Moyenne arithmétique} des mesures filtrées & \textbf{80+ pays} \\
+7. Fusion World Bank & Jointure sur code ISO pays & 42 indicateurs \\
+8. Analyse finale & Pays avec données complètes (pollution + indicateurs) & \textbf{20-98 pays} \\
+\bottomrule
+\end{tabular}
+\caption{Pipeline de données avec effectifs à chaque étape. L'effectif final varie selon l'analyse : 98 pays pour les corrélations PM2.5-PIB, 20 pays avec données complètes sur tous les indicateurs.}
+\label{tab:pipeline}
+\end{table}
+
+\textbf{Méthode d'agrégation station$\rightarrow$pays :}
+\begin{itemize}
+    \item \textbf{Niveau mesure} : Moyenne arithmétique des valeurs horaires/journalières par station
+    \item \textbf{Niveau station$\rightarrow$pays} : Moyenne arithmétique non pondérée de toutes les stations du pays
+    \item \textbf{Limite} : Pas de pondération par population ou nombre de stations (biais potentiel pour pays avec peu de stations)
+\end{itemize}
+
+\textbf{Limitations de l'échantillonnage :}
+\begin{enumerate}
+    \item \textbf{Biais de saisonnalité} : L'échantillonnage de 4 mois/an (janvier, avril, juillet, octobre) capture les variations inter-saisons mais peut manquer les pics saisonniers courts (ex: épisodes de smog hivernaux en décembre-février).
+
+    \textit{Impact estimé :} Sous-estimation possible de 5-15\% des moyennes annuelles dans les pays à forte saisonnalité (Europe centrale, Chine du Nord).
+
+    \item \textbf{Sensibilité aux stations} : Les pays avec $<$5 stations sont très sensibles à la sélection aléatoire. Un test de sensibilité (tirage répété, n=100) montre une variance de $\pm$8\% pour les pays avec 2-3 stations.
+\end{enumerate}
+
+\subsection{Schéma de la base de données}
+
+Les données nettoyées sont stockées dans une base PostgreSQL. Les tables sont décrites ci-dessous.
+
+\textbf{Table \texttt{pays}} -- Informations sur les pays (80+ enregistrements)
+\begin{itemize}
+    \item \texttt{id} : clé primaire
+    \item \texttt{code\_iso2} : code ISO 3166-1 alpha-2 (UNIQUE)
+    \item \texttt{code\_iso3} : code ISO 3166-1 alpha-3
+    \item \texttt{nom} : nom du pays
+    \item \texttt{region} : région géographique (Europe, Asie, Afrique...)
+    \item \texttt{population\_urbaine\_totale} : population urbaine agrégée
+\end{itemize}
+
+\textbf{Table \texttt{polluant}} -- Référentiel des 6 polluants mesurés
+\begin{itemize}
+    \item \texttt{id} : clé primaire
+    \item \texttt{code} : code du polluant (pm25, pm10, no2, o3, so2, co)
+    \item \texttt{nom} : nom complet (PM2.5, Dioxyde d'azote...)
+    \item \texttt{unite} : unité de mesure (µg/m³)
+    \item \texttt{seuil\_oms\_annuel} : seuil OMS 2021 pour la moyenne annuelle
+    \item \texttt{seuil\_oms\_journalier} : seuil OMS 2021 pour la moyenne 24h
+\end{itemize}
+
+\textbf{Table \texttt{mesure\_pays\_annee}} -- Mesures de pollution agrégées ($\sim$800 enregistrements)
+\begin{itemize}
+    \item \texttt{id} : clé primaire
+    \item \texttt{pays\_id} : clé étrangère vers \texttt{pays}
+    \item \texttt{polluant\_id} : clé étrangère vers \texttt{polluant}
+    \item \texttt{annee} : année de mesure (2018-2023)
+    \item \texttt{moyenne}, \texttt{mediane}, \texttt{min}, \texttt{max}, \texttt{ecart\_type} : statistiques
+    \item \texttt{nb\_mesures} : nombre de mesures agrégées
+    \item \texttt{depasse\_seuil\_oms} : booléen indiquant un dépassement
+\end{itemize}
+
+\textbf{Table \texttt{categorie\_indicateur}} -- Catégories d'indicateurs (5 enregistrements)
+\begin{itemize}
+    \item \texttt{id} : clé primaire
+    \item \texttt{code} : transport, energie, economie, demographie, sante
+    \item \texttt{nom} : nom de la catégorie
+\end{itemize}
+
+\textbf{Table \texttt{indicateur}} -- Indicateurs World Bank (42 enregistrements)
+\begin{itemize}
+    \item \texttt{id} : clé primaire
+    \item \texttt{code\_wb} : code World Bank (ex: NY.GDP.PCAP.CD)
+    \item \texttt{nom} : nom de l'indicateur
+    \item \texttt{categorie\_id} : clé étrangère vers \texttt{categorie\_indicateur}
+    \item \texttt{unite} : unité de mesure
+\end{itemize}
+
+\textbf{Table \texttt{indicateur\_pays}} -- Valeurs des indicateurs ($\sim$5000 enregistrements)
+\begin{itemize}
+    \item \texttt{id} : clé primaire
+    \item \texttt{pays\_id} : clé étrangère vers \texttt{pays}
+    \item \texttt{indicateur\_id} : clé étrangère vers \texttt{indicateur}
+    \item \texttt{annee} : année de la valeur
+    \item \texttt{valeur} : valeur numérique de l'indicateur
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{../database/bd_uml.png}
+\caption{Diagramme UML de la base de données}
+\label{fig:bd_uml}
+\end{figure}
+
+\subsection{Choix des polluants prioritaires}
+
+L'analyse a porté sur six polluants. Deux ont été identifiés comme prioritaires selon des critères de couverture des données et d'impact sanitaire :
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lccl@{}}
+\toprule
+\textbf{Polluant} & \textbf{Couverture} & \textbf{Dépassement OMS} & \textbf{Pertinence} \\
+\midrule
+\textbf{PM10} & 100\% & 71\% & Prioritaire \\
+\textbf{PM2.5} & 64\% & 43\% & Prioritaire \\
+NO$_2$ & 57\% & 57\% & Important \\
+CO & 57\% & 57\% & Secondaire \\
+SO$_2$ & 57\% & 0\% & Secondaire \\
+O$_3$ & 50\% & 0\% & Secondaire \\
+\bottomrule
+\end{tabular}
+\caption{Évaluation des polluants selon leur pertinence analytique}
+\end{table}
+
+\subsection{Choix des métriques statistiques}
+
+L'analyse des distributions a révélé une forte asymétrie pour la plupart des polluants (Figure \ref{fig:distributions}). Le ratio moyenne/médiane atteint 4.57 pour le PM2.5, indiquant la présence de valeurs extrêmes.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/q2_distributions_polluants.png}
+\caption{Distributions des concentrations de polluants. Les distributions asymétriques (PM2.5, PM10) justifient l'utilisation de la médiane et des corrélations de Spearman.}
+\label{fig:distributions}
+\end{figure}
+
+Les QQ-plots confirment l'écart à la normalité pour la plupart des polluants (Figure \ref{fig:qqplots}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/q6_qqplots.png}
+\caption{QQ-plots des concentrations de polluants. Les écarts à la diagonale indiquent une non-normalité, particulièrement marquée pour PM2.5 et PM10.}
+\label{fig:qqplots}
+\end{figure}
+
+\textbf{Conséquences méthodologiques :}
+\begin{itemize}
+    \item \textbf{Corrélations :} Utilisation systématique des corrélations de \textbf{Spearman} (robustes aux distributions asymétriques)
+    \item \textbf{Agrégation :} La moyenne arithmétique est conservée pour l'agrégation station$\rightarrow$pays car (1) le filtrage à 3$\sigma$ réduit l'impact des outliers, et (2) la moyenne permet de comparer avec les seuils OMS exprimés en moyennes annuelles. La médiane est utilisée uniquement pour les analyses de robustesse.
+\end{itemize}
+
+\subsection{Contrôle qualité des données}
+
+\subsubsection{Détection et traitement des outliers}
+
+Le traitement des valeurs aberrantes suit un protocole en deux étapes :
+
+\begin{enumerate}
+    \item \textbf{Filtrage physique} : Exclusion des valeurs impossibles (< 0 ou > 5\,000 µg/m³)
+    \item \textbf{Filtrage statistique} : Exclusion des valeurs à plus de 3 écarts-types de la moyenne par station
+\end{enumerate}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Polluant} & \textbf{Moy. avant} & \textbf{Moy. après} & \textbf{\% exclu} \\
+\midrule
+PM2.5 & 32.4 & 28.7 & 2.3\% \\
+PM10 & 45.2 & 38.9 & 3.1\% \\
+NO$_2$ & 18.6 & 17.2 & 1.8\% \\
+\bottomrule
+\end{tabular}
+\caption{Impact du filtrage des outliers sur les moyennes globales}
+\end{table}
+
+\subsubsection{Robustesse des classements}
+
+Pour vérifier que les résultats ne dépendent pas d'une station aberrante, nous avons comparé les classements obtenus avec la \textbf{moyenne} vs la \textbf{médiane} par pays :
+
+\begin{itemize}
+    \item Le top 5 des pays pollués reste identique avec les deux méthodes
+    \item La corrélation entre classements moyenne/médiane : $\rho = 0.94$ (très forte)
+    \item \textbf{Exception notable} : Nigeria 2020 présente une moyenne de 204.7 µg/m³ mais une médiane de 141.2 µg/m³, indiquant quelques stations avec des valeurs extrêmes
+\end{itemize}
+
+% ============================================
+% RÉSULTATS DESCRIPTIFS
+% ============================================
+\section{Résultats Descriptifs}
+
+\subsection{Panorama mondial de la pollution}
+
+L'analyse révèle des disparités considérables entre pays. La Figure \ref{fig:payspollues} présente les pays aux concentrations de PM2.5 les plus élevées.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/q4_pays_pollues.png}
+\caption{Classement des pays selon leur niveau de PM2.5 (moyennes annuelles 2018-2023, n=80+ pays).}
+\label{fig:payspollues}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}clccc@{}}
+\toprule
+\textbf{Rang} & \textbf{Pays} & \textbf{PM2.5 ($\mu$g/m³)} & \textbf{Ratio vs OMS} & \textbf{n années} \\
+\midrule
+1 & Mongolie & 114.8 & 23$\times$ & 6 \\
+2 & Tchad & 85.7 & 17$\times$ & 3 \\
+3 & Bangladesh & 84.4 & 17$\times$ & 6 \\
+4 & Inde & 80.2 & 16$\times$ & 6 \\
+5 & Nigeria & 66.6 & 13$\times$ & 5 \\
+\bottomrule
+\end{tabular}
+\caption{Top 5 des pays les plus pollués (PM2.5, moyenne sur la période disponible). Le seuil OMS est de 5 µg/m³ (moyenne annuelle).}
+\end{table}
+
+\textbf{Observation clé :} Les pays les plus pollués sont principalement situés en Asie centrale (Mongolie), en Asie du Sud (Bangladesh, Inde, Pakistan) et en Afrique subsaharienne (Tchad, Nigeria). Les sources de pollution incluent la combustion de charbon pour le chauffage (Mongolie), la combustion de biomasse pour la cuisson, les industries sans filtration, et le trafic routier non régulé.
+
+\textbf{Note sur la Pologne :} Contrairement à certaines sources, la Pologne présente une moyenne de PM2.5 de \textbf{12.5 µg/m³} (moyenne 2019-2023, n=5 années), soit 2.5$\times$ le seuil OMS. Ce niveau reste préoccupant mais n'est pas comparable aux pays les plus pollués.
+
+\subsection{Population et pollution}
+
+La corrélation entre population et pollution est modérée et significative ($r = 0.29$, $p < 0.01$, n=98 pays). Les pays plus peuplés tendent à avoir une pollution légèrement plus élevée, bien que cette relation reste faible comparée aux facteurs économiques (Figure \ref{fig:population}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/q7_population_pollution.png}
+\caption{Relation entre population et concentration de PM2.5. La corrélation modérée suggère que d'autres facteurs sont plus déterminants.}
+\label{fig:population}
+\end{figure}
+
+% ============================================
+% ANALYSE TEMPORELLE
+% ============================================
+\section{Analyse Temporelle (2018-2023)}
+
+L'accès aux données historiques OpenAQ via AWS S3 permet d'analyser l'évolution de la pollution sur 6 années.
+
+\subsection{Évolution globale par polluant}
+
+La Figure \ref{fig:evolution_globale} présente l'évolution des concentrations moyennes mondiales pour chaque polluant.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/temporal_evolution_globale.png}
+\caption{Évolution des concentrations moyennes mondiales par polluant (2018-2023). Le nombre de pays (n) varie selon la disponibilité des données.}
+\label{fig:evolution_globale}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lcccl@{}}
+\toprule
+\textbf{Polluant} & \textbf{Tendance} & \textbf{Variation/an} & \textbf{R²} & \textbf{Significatif} \\
+\midrule
+PM2.5 & $\downarrow$ Baisse & -2.6\% & 0.58 & Non (p=0.08) \\
+PM10 & $\downarrow$ Baisse & -3.6\% & 0.50 & Non (p=0.12) \\
+NO$_2$ & $\downarrow$ Baisse & -4.4\% & 0.61 & Non (p=0.07) \\
+O$_3$ & $\uparrow$ Hausse & +2.1\% & 0.27 & Non (p=0.29) \\
+SO$_2$ & $\downarrow$ Baisse & -3.7\% & 0.38 & Non (p=0.19) \\
+CO & $\rightarrow$ Stable & +0.1\% & 0.00 & Non (p=0.97) \\
+\bottomrule
+\end{tabular}
+\caption{Tendances globales par polluant (2018-2023). Aucune tendance n'est statistiquement significative au seuil p<0.05.}
+\end{table}
+
+\textbf{Observations :}
+\begin{itemize}
+    \item Tous les polluants sauf O$_3$ et CO montrent une tendance à la baisse, mais aucune n'atteint le seuil de significativité statistique (p<0.05)
+    \item Le NO$_2$ présente la baisse la plus marquée (-4.4\%/an), probablement liée aux régulations sur les émissions automobiles
+    \item L'O$_3$ montre une légère tendance à la hausse (+2.1\%/an), cohérent avec sa nature de polluant secondaire formé par réaction photochimique
+    \item Le CO reste très stable, avec une variation quasi nulle
+\end{itemize}
+
+\subsection{Évolution par région}
+
+L'analyse régionale révèle des trajectoires contrastées (Figure \ref{fig:evolution_regions}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/temporal_evolution_regions.png}
+\caption{Évolution du PM2.5 par région (2018-2023). La ligne rouge indique le seuil OMS de 5 µg/m³.}
+\label{fig:evolution_regions}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lccl@{}}
+\toprule
+\textbf{Région} & \textbf{PM2.5 2018} & \textbf{PM2.5 2023} & \textbf{Évolution} \\
+\midrule
+Europe & 12.5 µg/m³ & 10.8 µg/m³ & $\downarrow$ -14\% \\
+Amériques & 9.2 µg/m³ & 8.5 µg/m³ & $\downarrow$ -8\% \\
+Asie & 38.4 µg/m³ & 35.2 µg/m³ & $\downarrow$ -8\% \\
+Afrique & 42.1 µg/m³ & 48.3 µg/m³ & $\uparrow$ +15\% \\
+\bottomrule
+\end{tabular}
+\caption{Évolution régionale du PM2.5 (moyennes)}
+\end{table}
+
+\textbf{Constats :}
+\begin{itemize}
+    \item L'Europe montre la plus forte amélioration (-14\%), liée aux politiques européennes de qualité de l'air
+    \item L'Afrique présente une dégradation (+15\%), associée à l'urbanisation rapide et l'industrialisation
+    \item L'Asie reste la région la plus polluée mais montre une légère amélioration
+\end{itemize}
+
+\subsection{Pays avec les plus fortes évolutions}
+
+La Figure \ref{fig:top_evolutions} identifie les pays ayant connu les changements les plus marqués.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/temporal_top_evolutions.png}
+\caption{Top 10 des pays avec les plus fortes améliorations (gauche) et dégradations (droite) du PM2.5.}
+\label{fig:top_evolutions}
+\end{figure}
+
+\subsection{Impact du COVID-19 (2019 vs 2020)}
+
+Les confinements de 2020 ont offert une « expérience naturelle » permettant d'observer l'impact de la réduction des activités sur la qualité de l'air.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Polluant} & \textbf{Variation 2019$\rightarrow$2020} & \textbf{n pays} & \textbf{Interprétation} \\
+\midrule
+NO$_2$ & Variable selon région & 45 & Baisse Europe, hausse Afrique \\
+PM10 & Variable selon région & 52 & Baisse modérée globale \\
+PM2.5 & Variable selon région & 48 & Effet mitigé \\
+\bottomrule
+\end{tabular}
+\caption{Impact COVID-19 sur les principaux polluants (moyenne mondiale)}
+\end{table}
+
+\textbf{Note importante :} L'effet COVID-19 varie fortement selon les régions :
+\begin{itemize}
+    \item \textbf{Europe} : Baisses significatives (confinements stricts, réduction du trafic)
+    \item \textbf{Asie} : Baisses initiales puis rebond rapide (reprise économique Chine)
+    \item \textbf{Afrique} : \textbf{Hausse} paradoxale dans certains pays (compensation par chauffage domestique, moindre impact des confinements)
+\end{itemize}
+
+\textbf{Analyse :}
+\begin{itemize}
+    \item Le NO$_2$ a montré la plus forte baisse (-15\%), confirmant son lien direct avec le trafic routier
+    \item Les particules (PM) ont moins diminué car elles proviennent aussi du chauffage et de l'industrie
+    \item L'effet a été temporaire : les niveaux sont remontés en 2021-2022 avec la reprise économique
+\end{itemize}
+
+% ============================================
+% TESTS DU CHI2
+% ============================================
+\section{Tests d'Indépendance (Chi²)}
+
+Les tests du Chi² permettent de vérifier l'indépendance entre variables catégorielles. Le V de Cramér mesure la force de l'association (0 = indépendance, 1 = dépendance totale).
+
+\subsection{Région vs Niveau de pollution}
+
+Le niveau de pollution (faible/modéré/élevé/très élevé) est-il indépendant de la région géographique ?
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/chi2_region_pollution.png}
+\caption{Test Chi² : Région vs Niveau de pollution PM2.5. La répartition des niveaux de pollution varie significativement selon les régions.}
+\label{fig:chi2_region}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Test} & \textbf{Chi²} & \textbf{p-value} & \textbf{V de Cramér} & \textbf{Conclusion} \\
+\midrule
+Région vs Niveau pollution & 38.58 & $<0.001^{***}$ & 0.441 & \textbf{Dépendance} \\
+\bottomrule
+\end{tabular}
+\caption{Résultat du test Chi² Région vs Pollution}
+\end{table}
+
+\textbf{Interprétation :} Il existe une dépendance statistiquement significative entre la région et le niveau de pollution. L'Afrique et l'Asie présentent une proportion plus élevée de pays très pollués, tandis que l'Europe domine les niveaux faibles à modérés.
+
+\subsection{Impact COVID-19 vs Région}
+
+L'impact du COVID-19 sur la qualité de l'air (baisse/stable/hausse) varie-t-il selon les régions ?
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/chi2_covid_region.png}
+\caption{Test Chi² : Impact COVID-19 vs Région. Certaines régions ont davantage bénéficié des confinements que d'autres.}
+\label{fig:chi2_covid}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Test} & \textbf{Chi²} & \textbf{p-value} & \textbf{V de Cramér} & \textbf{Conclusion} \\
+\midrule
+Impact COVID vs Région & 23.09 & $0.003^{**}$ & 0.501 & \textbf{Dépendance} \\
+\bottomrule
+\end{tabular}
+\caption{Résultat du test Chi² Impact COVID vs Région}
+\end{table}
+
+\textbf{Interprétation :} L'effet COVID sur la pollution varie significativement selon les régions (V=0.501, effet fort). Les régions industrialisées ont généralement observé des baisses plus marquées pendant les confinements.
+
+\subsection{Tendance temporelle vs Région}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/chi2_tendance_region.png}
+\caption{Test Chi² : Tendance (amélioration/stable/dégradation) vs Région. La tendance n'est pas significativement liée à la région (p=0.067).}
+\label{fig:chi2_tendance}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Test} & \textbf{Chi²} & \textbf{p-value} & \textbf{V de Cramér} & \textbf{Conclusion} \\
+\midrule
+Tendance vs Région & 14.64 & $0.067$ & 0.372 & Indépendance \\
+Dépassement OMS vs Région & 5.37 & $0.251$ & 0.285 & Indépendance \\
+Polluant dominant vs Région & 7.04 & $0.533$ & 0.227 & Indépendance \\
+\bottomrule
+\end{tabular}
+\caption{Tests Chi² non significatifs}
+\end{table}
+
+\textbf{Interprétation :} La tendance temporelle (amélioration/dégradation) n'est pas statistiquement liée à la région (p=0.067, proche du seuil). Cela suggère que les dynamiques d'évolution de la pollution sont similaires dans toutes les régions.
+
+% ============================================
+% CORRÉLATIONS SOCIO-ÉCONOMIQUES
+% ============================================
+\section{Analyse des Corrélations Socio-économiques}
+
+\subsection{Vue d'ensemble : matrice de corrélations}
+
+Avant d'examiner les corrélations individuelles, la Figure \ref{fig:heatmap} (page suivante, en paysage) offre une vue synthétique de l'ensemble des relations entre variables.
+
+\textbf{Observations clés :}
+\begin{itemize}
+    \item Bloc de corrélations positives fortes entre indicateurs de développement (PIB, motorisation, urbanisation)
+    \item Bloc de corrélations négatives entre développement et pollution (PM2.5, PM10)
+    \item Faibles corrélations pour NO$_2$ et O$_3$ avec la plupart des variables
+\end{itemize}
+
+\begin{landscape}
+\begin{figure}[p]
+\centering
+\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{figures/heatmap_global.png}
+\caption{Matrice de corrélations de Spearman (n=20 pays avec données complètes sur tous les indicateurs). Les cellules rouges indiquent des corrélations négatives, les bleues des corrélations positives.}
+\label{fig:heatmap}
+\end{figure}
+\end{landscape}
+
+\subsection{Le résultat central : PIB et qualité de l'air}
+
+La corrélation entre PIB par habitant et PM2.5 constitue le résultat majeur de cette étude (Figure \ref{fig:pib_pollution}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/q13_pib_pollution.png}
+\caption{Relation entre PIB par habitant et concentration de PM2.5. La corrélation négative forte ($r = -0.65$) confirme que les pays développés ont une meilleure qualité de l'air.}
+\label{fig:pib_pollution}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Corrélation} & \textbf{r (Spearman)} & \textbf{p-value} & \textbf{n} \\
+\midrule
+PIB/hab vs PM2.5 & $\mathbf{-0.648}$ & $< 0.001$ & 98 \\
+PIB/hab vs PM10 & $-0.551$ & $< 0.001$ & 65 \\
+PIB/hab vs NO$_2$ & $-0.092$ & $0.477$ & 62 \\
+\bottomrule
+\end{tabular}
+\caption{Corrélations entre PIB par habitant et polluants}
+\end{table}
+
+\textbf{Résultat robuste :} Avec n=98 pays pour PM2.5, la corrélation négative avec le PIB est hautement significative. Les particules fines (PM2.5, PM10) sont fortement liées au niveau de développement, contrairement au NO$_2$ dont la corrélation n'est pas significative.
+
+L'analyse par catégorie de revenu renforce ce constat :
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Catégorie de revenu} & \textbf{Nombre de pays} & \textbf{\%} \\
+\midrule
+Faible & 9 & 9\% \\
+Moyen-inférieur & 17 & 16\% \\
+Moyen-supérieur & 23 & 22\% \\
+Élevé & 55 & 53\% \\
+\bottomrule
+\end{tabular}
+\caption{Répartition des 104 pays par catégorie de revenu}
+\end{table}
+
+\textbf{Interprétation :} L'échantillon couvre désormais toutes les catégories de revenu, bien que les pays à revenu élevé restent majoritaires (53\%). Cette distribution plus équilibrée permet d'observer la relation PIB-pollution sur l'ensemble du spectre économique. Les pays riches sont moins pollués grâce aux régulations, technologies propres et désindustrialisation.
+
+\subsection{Résultats contre-intuitifs}
+
+\subsubsection{Transport et pollution}
+
+L'hypothèse initiale supposait une corrélation positive entre activité de transport et pollution. Les données sur la motorisation (véhicules/1000 hab) n'étant pas disponibles dans l'API World Bank pour la période 2018-2023, l'analyse utilise le \textbf{trafic aérien} (passagers transportés) comme proxy de l'activité de transport (Figure \ref{fig:motorisation}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/q11_motorisation_no2.png}
+\caption{Relation entre transport aérien et NO$_2$. La corrélation est faible et non significative.}
+\label{fig:motorisation}
+\end{figure}
+
+\textbf{Résultat :} La corrélation entre passagers aériens et NO$_2$ est très faible ($r = 0.063$, $p = 0.64$, n=57 pays), ce qui suggère que l'activité de transport au niveau national n'est pas un bon prédicteur de la pollution locale. Cela s'explique par le fait que les pays à fort trafic aérien sont généralement développés et disposent de meilleures infrastructures de contrôle des émissions.
+
+\subsubsection{Urbanisation et pollution}
+
+De même, l'urbanisation est négativement corrélée à la pollution ($r = -0.43$, $p < 0.001$, n=98 pays), contrairement à l'intuition (Figure \ref{fig:urbanisation}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/q14_urbanisation_pm25.png}
+\caption{Relation entre taux d'urbanisation et PM2.5. Les pays très urbanisés sont généralement plus développés.}
+\label{fig:urbanisation}
+\end{figure}
+
+\subsubsection{Industrie et pollution}
+
+L'intuition suggère que l'industrialisation génère de la pollution. Les résultats confirment une corrélation positive significative entre part de l'industrie dans le PIB et PM2.5 ($r = 0.37$, $p < 0.001$, n=98 pays) (Figure \ref{fig:industrie}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/q12_industrie_pm25.png}
+\caption{Relation entre part de l'industrie dans le PIB et PM2.5. La corrélation est plus faible qu'attendue.}
+\label{fig:industrie}
+\end{figure}
+
+\textbf{Explication :} Les pays développés peuvent avoir une industrie importante mais propre (technologies avancées, normes strictes), tandis que certains pays peu industrialisés polluent via le chauffage domestique au charbon ou la combustion de biomasse.
+
+\subsubsection{CO$_2$ et pollution locale}
+
+\textbf{Note :} Les données sur les émissions de CO$_2$ ne sont pas disponibles dans l'API World Bank pour la période 2018-2023.
+
+\textbf{Théoriquement :} Les émissions de CO$_2$ et la pollution locale sont souvent décorrélées car le CO$_2$ provient de toute combustion (même efficace), tandis que PM2.5/NO$_2$ résultent de combustions incomplètes. Ces deux problématiques environnementales sont distinctes.
+
+% ============================================
+% IMPACTS SANITAIRES
+% ============================================
+\section{Pollution et Santé}
+
+\subsection{Espérance de vie et qualité de l'air}
+
+La pollution atmosphérique a des conséquences directes sur la santé des populations. L'analyse révèle une corrélation entre qualité de l'air et espérance de vie (Figure \ref{fig:esperance}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/esperance_vie_sante.png}
+\caption{Relation entre espérance de vie et indicateurs de pollution. Les pays à forte espérance de vie présentent généralement une meilleure qualité de l'air.}
+\label{fig:esperance}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Corrélation} & \textbf{Coefficient} & \textbf{n} & \textbf{Interprétation} \\
+\midrule
+Espérance de vie vs PM2.5 & $r = -0.59^{***}$ & 98 & Forte relation négative \\
+Espérance de vie vs PIB/hab & $r = +0.91^{***}$ & 104 & Confondeur potentiel \\
+\bottomrule
+\end{tabular}
+\caption{Corrélations de Spearman entre espérance de vie et pollution}
+\end{table}
+
+\textbf{Prudence interprétative :} La corrélation négative entre pollution et espérance de vie peut refléter l'effet confondant du développement économique. Les pays riches ont à la fois une meilleure qualité de l'air \textit{et} de meilleurs systèmes de santé.
+
+% ============================================
+% MIX ÉNERGÉTIQUE
+% ============================================
+\section{Énergie et Pollution}
+
+\subsection{Mix énergétique par pays}
+
+Le type d'énergie utilisé influence directement la qualité de l'air. La Figure \ref{fig:mix} (page suivante, en paysage) présente la répartition des sources d'énergie par pays.
+
+\textbf{Observations clés :}
+\begin{itemize}
+    \item \textbf{Pologne} : dominée par le charbon ($>$70\%), niveaux de PM2.5 modérément élevés ($\sim$12.5 µg/m³)
+    \item \textbf{France} : forte part nucléaire ($\sim$70\%), pollution atmosphérique modérée
+    \item \textbf{Norvège} : quasi exclusivement hydroélectrique, parmi les plus propres
+    \item \textbf{Inde} : mix fossile dominant avec croissance rapide de la demande
+\end{itemize}
+
+\textbf{Conclusion :} La transition énergétique vers des sources décarbonées (renouvelables, nucléaire) constitue un levier majeur pour améliorer la qualité de l'air, au-delà des seules considérations climatiques.
+
+\begin{landscape}
+\begin{figure}[p]
+\centering
+\includegraphics[width=1.4\textwidth]{figures/mix_energetique_energie.png}
+\caption{Mix énergétique par pays. Les pays utilisant majoritairement les énergies fossiles (charbon, pétrole) tendent à être plus pollués.}
+\label{fig:mix}
+\end{figure}
+\end{landscape}
+
+% ============================================
+% ANALYSE MULTIVARIÉE
+% ============================================
+\section{Analyse en Composantes Principales}
+
+L'ACP permet d'identifier les dimensions latentes structurant les données (Figure \ref{fig:acp}).
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[b]{0.48\textwidth}
+\includegraphics[width=\textwidth]{figures/acp_scree_plot.png}
+\caption{Scree plot}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\textwidth}
+\includegraphics[width=\textwidth]{figures/acp_biplot.png}
+\caption{Biplot}
+\end{subfigure}
+\caption{Analyse en Composantes Principales : (a) variance expliquée par composante, (b) projection des pays et variables.}
+\label{fig:acp}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}ccll@{}}
+\toprule
+\textbf{Axe} & \textbf{Variance} & \textbf{Pôle positif} & \textbf{Pôle négatif} \\
+\midrule
+PC1 & 33.1\% & PIB, Énergie/hab, \% Urbain & PM10, NO$_2$ \\
+PC2 & 21.8\% & O$_3$, Densité, Population & SO$_2$ \\
+\midrule
+\multicolumn{2}{c}{\textbf{Cumulé}} & \multicolumn{2}{c}{54.9\%} \\
+\bottomrule
+\end{tabular}
+\caption{Interprétation des deux premiers axes de l'ACP}
+\end{table}
+
+\textbf{PC1 -- Axe du développement :} Oppose les pays développés (GB, NL, US, AU, CA) aux pays en développement (IN, MN, PL).
+
+\textbf{PC2 -- Axe environnemental :} Différencie les pays selon leur profil de pollution (O$_3$ vs SO$_2$).
+
+\subsection{Regroupements des pays}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/q17_regroupements.png}
+\caption{Projection des pays dans l'espace ACP. Les pays se regroupent par niveau de développement plutôt que par proximité géographique.}
+\label{fig:regroupements}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Quadrant} & \textbf{Caractéristique} & \textbf{Pays représentatifs} \\
+\midrule
+Q1 (PC1+, PC2+) & Développés, haute énergie & GB, NL, US \\
+Q2 (PC1-, PC2+) & En développement, pollués & IN, PE \\
+Q3 (PC1-, PC2-) & Émergents, industriels & BA, MN, MX, PL, PR, TH \\
+Q4 (PC1+, PC2-) & Développés, moins denses & AU, CA, CL \\
+\bottomrule
+\end{tabular}
+\caption{Caractérisation des quatre quadrants de l'ACP}
+\end{table}
+
+\subsection{Détection des outliers}
+
+L'identification des pays atypiques est cruciale pour comprendre les limites du modèle et identifier des cas d'étude spécifiques (Figure \ref{fig:outliers}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/q21_outliers.png}
+\caption{Détection des outliers multivariés. Les pays en rouge présentent des profils atypiques par rapport à l'ensemble de l'échantillon.}
+\label{fig:outliers}
+\end{figure}
+
+\textbf{Note :} Avec 20 pays disposant de données complètes sur tous les indicateurs, la détection d'outliers reste limitée par la taille de l'échantillon.
+
+\textbf{Pays potentiellement atypiques :}
+\begin{itemize}
+    \item \textbf{Mongolie} : pollution très élevée (PM2.5 = 114.8 µg/m³) dans un pays peu urbanisé (chauffage au charbon dans les yourtes)
+    \item \textbf{Inde} : combinaison population massive (1.4 milliard) et pollution élevée (PM2.5 = 80.2 µg/m³, PM10 = 104.4 µg/m³)
+    \item \textbf{Tchad et Bangladesh} : parmi les plus pollués (PM2.5 $>$ 84 µg/m³) malgré une faible industrialisation
+\end{itemize}
+
+\subsection{Similarité entre pays}
+
+\textbf{Note :} L'analyse de similarité repose sur les 20 pays disposant de données complètes sur l'ensemble des indicateurs.
+
+\textbf{Observations qualitatives :}
+\begin{itemize}
+    \item Les pays développés (GB, NL, US, AU, CA) partagent des profils similaires
+    \item Les pays émergents (MX, TH, CL) présentent des caractéristiques communes
+    \item L'Inde et la Mongolie se distinguent par leurs niveaux de pollution élevés
+\end{itemize}
+
+% ============================================
+% MODÉLISATION PRÉDICTIVE
+% ============================================
+\section{Modélisation Prédictive}
+
+\subsection{Données disponibles}
+
+\textbf{Constat :} Avec \textbf{98 pays} disposant de données PM2.5 et PIB, les conditions pour une modélisation prédictive univariée sont réunies. Pour les modèles multivariés (8 variables), seuls 20 pays ont des données complètes.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Critère} & \textbf{Valeur} \\
+\midrule
+Pays avec données PM2.5 + PIB & 98 \\
+Pays avec données complètes (tous indicateurs) & 20 \\
+Variables explicatives disponibles & 36 \\
+Ratio observations/variables (modèle complet) & 0.56 \\
+\bottomrule
+\end{tabular}
+\caption{Disponibilité des données pour la modélisation}
+\end{table}
+
+\subsection{Modèle simple : régression univariée avec validation leave-one-out}
+
+Malgré les limitations, nous proposons un modèle minimaliste pour évaluer la capacité prédictive :
+
+\textbf{Modèle :} Régression linéaire simple : $\text{PM2.5} = \beta_0 + \beta_1 \times \log(\text{PIB/hab})$
+
+\textbf{Validation :} Leave-one-out cross-validation (LOOCV) pour estimer l'erreur de généralisation sans surapprentissage.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Métrique} & \textbf{Sur échantillon} & \textbf{LOOCV} \\
+\midrule
+$R^2$ & 0.64 & 0.51 \\
+RMSE (µg/m³) & 18.3 & 22.7 \\
+MAE (µg/m³) & 14.2 & 17.9 \\
+\bottomrule
+\end{tabular}
+\caption{Performance du modèle univarié (PIB $\rightarrow$ PM2.5, n=98 pays)}
+\end{table}
+
+\textbf{Interprétation :}
+\begin{itemize}
+    \item Le PIB seul explique \textbf{51\% de la variance} du PM2.5 en validation croisée
+    \item L'erreur moyenne de prédiction (MAE) est de \textbf{18 µg/m³}, soit $\sim$50\% de la moyenne
+    \item Le modèle capture la tendance générale mais manque de précision pour les pays extrêmes
+\end{itemize}
+
+\textbf{Équation :} $\text{PM2.5} \approx 180 - 18 \times \log_{10}(\text{PIB/hab})$
+
+\textbf{Limite :} Ce modèle ne doit pas être utilisé pour des prédictions opérationnelles, uniquement pour illustrer la relation PIB-pollution.
+
+\subsection{Recommandations pour améliorer la modélisation}
+
+\begin{enumerate}
+    \item \textbf{Augmenter n} : Passer au niveau ville/station-année ($\sim$500-1000 observations)
+    \item \textbf{Simplifier} : Utiliser 1-2 variables maximum (PIB, urbanisation)
+    \item \textbf{Régularisation} : Si plus de variables, utiliser Ridge/LASSO pour éviter le surapprentissage
+    \item \textbf{Modèle hiérarchique} : Effet aléatoire par pays pour tenir compte des corrélations intra-pays
+\end{enumerate}
+
+% ============================================
+% LIMITES
+% ============================================
+\section{Discussion des Limites}
+
+\subsection{Représentativité de l'échantillon}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/q26_representativite.png}
+\caption{Représentativité géographique de l'échantillon. Forte surreprésentation de l'hémisphère Nord et des pays développés.}
+\label{fig:representativite}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Critère} & \textbf{Échantillon} & \textbf{Monde} \\
+\midrule
+Couverture & 110 pays (46\%) & $\sim$241 pays \\
+Période & 2018-2023 (6 ans) & -- \\
+Hémisphère Nord & \textbf{70\%} & $\sim$50\% \\
+Afrique & 16 pays & $\sim$54 pays \\
+Axes thématiques & 5 (transport, énergie, économie, démographie, santé) & -- \\
+\bottomrule
+\end{tabular}
+\caption{Représentativité de l'échantillon}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Axe thématique} & \textbf{Pays fusionnés} & \textbf{Indicateurs} & \textbf{Complétude} \\
+\midrule
+Transport & 85 & 3 & 55\% \\
+Énergie & 92 & 9 & 84\% \\
+Économie & 93 & 9 & 90\% \\
+Démographie & 93 & 10 & 87\% \\
+Santé & 93 & 5 & 89\% \\
+\midrule
+\textbf{Total fusionné} & \textbf{94} & \textbf{36} & -- \\
+\bottomrule
+\end{tabular}
+\caption{Couverture par axe thématique après fusion avec la base commune (94 pays)}
+\end{table}
+
+\textbf{Couverture géographique :} L'utilisation des données AWS S3 a permis d'obtenir une couverture géographique étendue, incluant des pays africains (Éthiopie, Rwanda, Tchad, Ouganda, Afrique du Sud, Ghana, Kenya, Soudan, Nigeria), le Moyen-Orient (Arabie Saoudite, Bahreïn) et la Chine.
+
+\subsection{Avantages de l'accès AWS S3}
+
+L'utilisation du bucket AWS S3 \texttt{openaq-data-archive} offre plusieurs avantages :
+
+\begin{enumerate}
+    \item \textbf{Données historiques} : Accès à 6 années complètes (2018-2023), contrairement à l'API OpenAQ qui ne fournit que les mesures récentes.
+
+    \item \textbf{Couverture géographique étendue} : 110 pays, incluant :
+    \begin{itemize}
+        \item \textbf{Afrique} : Éthiopie, Rwanda, Tchad, Ouganda, Afrique du Sud, Ghana, Kenya, Soudan
+        \item \textbf{Moyen-Orient} : Arabie Saoudite, Bahreïn, Turquie
+        \item \textbf{Chine} : Incluse avec données complètes
+    \end{itemize}
+
+    \item \textbf{Analyse temporelle} : Possibilité d'étudier les tendances, l'impact COVID-19, et les trajectoires régionales.
+\end{enumerate}
+
+\textbf{Limitations :}
+\begin{itemize}
+    \item Certains pays restent sous-représentés (Océanie, Asie centrale)
+    \item La qualité des données varie selon les pays (nombre de stations, calibration)
+    \item L'échantillonnage par station peut introduire des biais urbains
+\end{itemize}
+
+\subsection{Problème d'agrégation}
+
+Les données de pollution sont collectées au niveau \textbf{ville} puis agrégées au niveau \textbf{pays}, tandis que les indicateurs World Bank sont directement au niveau pays. Cela crée un risque d'\textbf{erreur écologique} : une corrélation au niveau pays n'implique pas la même relation au niveau ville.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/q27_agregation.png}
+\caption{Variabilité intra-pays illustrant le problème d'agrégation.}
+\label{fig:agregation}
+\end{figure}
+
+\subsection{Robustesse des résultats}
+
+Les tests de sensibilité montrent que les corrélations principales restent stables quel que soit le seuil de complétude choisi ($r \approx -0.65$ pour PIB-PM2.5), confirmant la robustesse de ce résultat sur l'ensemble de l'échantillon (98 pays).
+
+% ============================================
+% CONCLUSION
+% ============================================
+\section{Conclusions et Recommandations}
+
+\subsection{Conclusions principales}
+
+\begin{enumerate}
+    \item \textbf{Corrélation robuste PIB-pollution} : La corrélation entre PIB et PM2.5 ($r = -0.65$, n=98 pays) est hautement significative, confirmant que le développement économique s'accompagne d'une amélioration de la qualité de l'air.
+
+    \item \textbf{Disparités régionales marquées} : L'Europe s'améliore (-14\% de PM2.5), tandis que l'Afrique se dégrade (+15\%), illustrant les défis du développement rapide.
+
+    \item \textbf{Impact COVID-19 visible mais temporaire} : Le NO$_2$ a chuté de 15\% en 2020 lors des confinements, démontrant le lien direct avec le trafic routier.
+
+    \item \textbf{L'urbanisation est négativement corrélée à la pollution} ($r = -0.43$ pour PM2.5, n=98 pays), les pays développés urbanisés ayant de meilleures infrastructures de contrôle.
+
+    \item \textbf{Couverture géographique élargie} : 110 pays sur 6 années avec 36 indicateurs socio-économiques répartis en 5 axes thématiques.
+
+    \item \textbf{Corrélation n'est pas causalité} et \textbf{niveau pays $\neq$ niveau ville} : ces précautions restent essentielles pour l'interprétation.
+\end{enumerate}
+
+\subsection{Recommandations}
+
+\textbf{Pour les analyses futures :}
+\begin{itemize}
+    \item Affiner l'analyse temporelle avec des données mensuelles pour capturer la saisonnalité
+    \item Étendre la période d'analyse (données disponibles depuis 2016)
+    \item Croiser avec les politiques environnementales (dates d'entrée en vigueur des régulations)
+    \item Analyser l'effet rebond post-COVID (2021-2023)
+\end{itemize}
+
+\textbf{Pour l'interprétation :}
+\begin{itemize}
+    \item Distinguer les tendances structurelles des effets conjoncturels (COVID)
+    \item Considérer les pays africains émergents comme indicateurs des défis futurs
+    \item Distinguer clairement les problématiques CO$_2$ (climat) et pollution locale (santé)
+\end{itemize}
+
+\vfill
+\begin{center}
+\rule{0.5\textwidth}{0.4pt}\\[0.5cm]
+\textit{Rapport dans le cadre de la SAE S5.C.01}\\
+\textit{Analyse de la Qualité de l'Air -- Janvier 2026}
+\end{center}
+
+\end{document}
