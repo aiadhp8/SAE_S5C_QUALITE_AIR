@@ -148,6 +148,7 @@ export class NavbarComponent {
     { id: 'accueil', label: 'Accueil', icon: 'dashboard' },
     { id: 'tendances', label: 'Tendances', icon: 'trending_up' },
     { id: 'facteurs', label: 'Facteurs', icon: 'analytics' },
+    { id: 'chi2', label: 'Chi²', icon: 'grid_on' },
     { id: 'acp', label: 'ACP', icon: 'scatter_plot' },
     { id: 'prediction', label: 'Prédiction', icon: 'psychology' },
     { id: 'qualite', label: 'Qualité', icon: 'verified' }

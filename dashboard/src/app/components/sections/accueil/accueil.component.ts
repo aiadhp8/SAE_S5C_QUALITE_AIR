@@ -39,13 +39,13 @@ import { Country, POLLUTANTS, Pollutant } from '../../../models/types';
         </app-kpi-card>
 
         <app-kpi-card
-          label="Médiane mondiale"
-          [value]="medianValue"
+          [label]="statLabel + ' mondiale'"
+          [value]="globalStatValue"
           [unit]="unit"
           icon="analytics"
-          [highlight]="medianValue !== null && medianValue <= whoLimit"
-          [warning]="medianValue !== null && medianValue > whoLimit"
-          tooltip="Valeur médiane du polluant sélectionné pour tous les pays">
+          [highlight]="globalStatValue !== null && globalStatValue <= whoLimit"
+          [warning]="globalStatValue !== null && globalStatValue > whoLimit"
+          [tooltip]="'Valeur ' + statLabel.toLowerCase() + ' du polluant sélectionné pour tous les pays'">
         </app-kpi-card>
 
         <app-kpi-card
@@ -211,15 +211,18 @@ export class AccueilComponent implements OnInit, OnDestroy, AfterViewInit {
 
   totalCountries = 0;
   selectedPollutantLabel = 'PM2.5';
-  medianValue: number | null = null;
+  globalStatValue: number | null = null;
   aboveWhoPercent: number | null = null;
   whoLimit = 5;
   unit = 'µg/m³';
+  statLabel = 'Médiane';
 
   topPolluted: BarChartData[] = [];
   leastPolluted: BarChartData[] = [];
 
   private countries: Country[] = [];
+  private currentStat: 'median' | 'average' = 'median';
+  private currentYear: number | 'all' = 'all';
 
   ngOnInit(): void {
     combineLatest([
@@ -230,19 +233,28 @@ export class AccueilComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(([countries, stats, filters]) => {
         this.countries = countries;
         this.totalCountries = countries.length;
+        this.currentStat = filters.stat;
+        this.currentYear = filters.year;
+        this.statLabel = filters.stat === 'median' ? 'Médiane' : 'Moyenne';
 
         const pollutantInfo = POLLUTANTS.find(p => p.code === filters.pollutant);
         this.selectedPollutantLabel = pollutantInfo?.label || 'PM2.5';
         this.unit = pollutantInfo?.unit || 'µg/m³';
         this.whoLimit = pollutantInfo?.whoLimit || 5;
 
+        // Calculate global stat using the selected statistic type
+        this.globalStatValue = this.dataService.getGlobalPollutionStat(
+          filters.pollutant,
+          filters.stat,
+          filters.year
+        );
+
         if (stats) {
-          this.medianValue = stats.median_values[filters.pollutant] ?? null;
           this.aboveWhoPercent = stats.above_who_pct[filters.pollutant] ?? null;
         }
 
-        this.updateRankings(filters.pollutant);
-        this.updateMap(filters.pollutant);
+        this.updateRankings(filters.pollutant, filters.stat, filters.year);
+        this.updateMap(filters.pollutant, filters.stat, filters.year);
       });
   }
 
@@ -276,13 +288,13 @@ export class AccueilComponent implements OnInit, OnDestroy, AfterViewInit {
     this.markersLayer = L.layerGroup().addTo(this.map);
   }
 
-  private updateMap(pollutant: Pollutant): void {
+  private updateMap(pollutant: Pollutant, stat: 'median' | 'average', year: number | 'all'): void {
     if (!this.map || !this.markersLayer) return;
 
     this.markersLayer.clearLayers();
 
     this.countries.forEach(country => {
-      const value = this.getPollutionValue(country, pollutant);
+      const value = this.dataService.getCountryPollutionByStat(country.code_pays, pollutant, stat, year);
       if (value === null || !country.latitude_moyenne || !country.longitude_moyenne) return;
 
       const color = this.getColorForValue(value, this.whoLimit);
@@ -299,33 +311,28 @@ export class AccueilComponent implements OnInit, OnDestroy, AfterViewInit {
 
       marker.bindTooltip(`
         <strong>${country.nom_pays}</strong><br>
-        ${this.selectedPollutantLabel}: ${value.toFixed(1)} ${this.unit}
+        ${this.selectedPollutantLabel} (${this.statLabel.toLowerCase()}): ${value.toFixed(1)} ${this.unit}
       `, { permanent: false });
 
       this.markersLayer!.addLayer(marker);
     });
   }
 
-  private updateRankings(pollutant: Pollutant): void {
-    const topCountries = this.dataService.getTopCountries(pollutant, 10, false);
-    const bottomCountries = this.dataService.getTopCountries(pollutant, 10, true);
+  private updateRankings(pollutant: Pollutant, stat: 'median' | 'average', year: number | 'all'): void {
+    const topCountries = this.dataService.getTopCountriesByStat(pollutant, stat, year, 10, false);
+    const bottomCountries = this.dataService.getTopCountriesByStat(pollutant, stat, year, 10, true);
 
     this.topPolluted = topCountries.map(c => ({
-      label: c.nom_pays,
-      value: this.getPollutionValue(c, pollutant) || 0,
-      color: this.getColorForValue(this.getPollutionValue(c, pollutant) || 0, this.whoLimit)
+      label: c.country.nom_pays,
+      value: c.value,
+      color: this.getColorForValue(c.value, this.whoLimit)
     }));
 
     this.leastPolluted = bottomCountries.map(c => ({
-      label: c.nom_pays,
-      value: this.getPollutionValue(c, pollutant) || 0,
-      color: this.getColorForValue(this.getPollutionValue(c, pollutant) || 0, this.whoLimit)
+      label: c.country.nom_pays,
+      value: c.value,
+      color: this.getColorForValue(c.value, this.whoLimit)
     }));
-  }
-
-  private getPollutionValue(country: Country, pollutant: Pollutant): number | null {
-    const key = `pollution_${pollutant}` as keyof Country;
-    return country[key] as number | null;
   }
 
   private getColorForValue(value: number, limit: number): string {

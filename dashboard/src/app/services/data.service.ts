@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, forkJoin, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin, map, tap, catchError, of } from 'rxjs';
 import {
   Country,
   PollutionData,
@@ -13,6 +13,7 @@ import {
   Completude,
   GlobalStats,
   AcpData,
+  Chi2Result,
   Pollutant
 } from '../models/types';
 
@@ -34,6 +35,7 @@ export class DataService {
   private completudeSubject = new BehaviorSubject<Completude[]>([]);
   private acpSubject = new BehaviorSubject<AcpData | null>(null);
   private temporalSubject = new BehaviorSubject<TemporalGlobal[]>([]);
+  private chi2Subject = new BehaviorSubject<Chi2Result[]>([]);
 
   // Observables publics
   countries$ = this.countriesSubject.asObservable();
@@ -46,6 +48,7 @@ export class DataService {
   completude$ = this.completudeSubject.asObservable();
   acp$ = this.acpSubject.asObservable();
   temporal$ = this.temporalSubject.asObservable();
+  chi2$ = this.chi2Subject.asObservable();
 
   private loaded = false;
 
@@ -64,7 +67,10 @@ export class DataService {
       features: this.http.get<FeatureImportance[]>(`${this.basePath}/features.json`),
       completude: this.http.get<Completude[]>(`${this.basePath}/completude.json`),
       acp: this.http.get<AcpData>(`${this.basePath}/acp.json`),
-      temporal: this.http.get<TemporalGlobal[]>(`${this.basePath}/temporal_global.json`)
+      temporal: this.http.get<TemporalGlobal[]>(`${this.basePath}/temporal_global.json`),
+      chi2: this.http.get<Chi2Result[]>(`${this.basePath}/chi2.json`).pipe(
+        catchError(() => of([]))
+      )
     }).pipe(
       tap(data => {
         this.countriesSubject.next(data.countries);
@@ -77,6 +83,7 @@ export class DataService {
         this.completudeSubject.next(data.completude);
         this.acpSubject.next(data.acp);
         this.temporalSubject.next(data.temporal);
+        this.chi2Subject.next(data.chi2);
         this.loaded = true;
       }),
       map(() => true)
@@ -84,6 +91,111 @@ export class DataService {
   }
 
   // Méthodes utilitaires
+
+  /**
+   * Get pollution value for a country using pollution.json data
+   * Supports median/average stat and year filtering
+   */
+  getCountryPollutionByStat(
+    countryCode: string,
+    pollutant: Pollutant,
+    stat: 'median' | 'average' = 'median',
+    year: number | 'all' = 'all'
+  ): number | null {
+    const pollutionData = this.pollutionSubject.value.find(p => p.country_code === countryCode);
+    if (!pollutionData) return null;
+
+    const years = Object.keys(pollutionData.years).map(Number);
+    if (years.length === 0) return null;
+
+    if (year !== 'all') {
+      // Single year
+      const yearData = pollutionData.years[year];
+      if (!yearData || !yearData[pollutant]) return null;
+      return yearData[pollutant][stat];
+    }
+
+    // Aggregate across all years
+    const values: number[] = [];
+    for (const y of years) {
+      const yearData = pollutionData.years[y];
+      if (yearData && yearData[pollutant] && yearData[pollutant][stat] !== null) {
+        values.push(yearData[pollutant][stat]!);
+      }
+    }
+
+    if (values.length === 0) return null;
+
+    // Return mean of the stat across years
+    return values.reduce((a, b) => a + b, 0) / values.length;
+  }
+
+  /**
+   * Get all countries with their pollution values for a given pollutant and stat
+   */
+  getCountriesWithPollution(
+    pollutant: Pollutant,
+    stat: 'median' | 'average' = 'median',
+    year: number | 'all' = 'all'
+  ): { country: Country; value: number }[] {
+    const countries = this.countriesSubject.value;
+    const result: { country: Country; value: number }[] = [];
+
+    for (const country of countries) {
+      const value = this.getCountryPollutionByStat(country.code_pays, pollutant, stat, year);
+      if (value !== null) {
+        result.push({ country, value });
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Get top countries sorted by pollution value
+   */
+  getTopCountriesByStat(
+    pollutant: Pollutant,
+    stat: 'median' | 'average' = 'median',
+    year: number | 'all' = 'all',
+    count: number = 10,
+    ascending: boolean = false
+  ): { country: Country; value: number }[] {
+    const countriesWithPollution = this.getCountriesWithPollution(pollutant, stat, year);
+
+    countriesWithPollution.sort((a, b) => {
+      return ascending ? a.value - b.value : b.value - a.value;
+    });
+
+    return countriesWithPollution.slice(0, count);
+  }
+
+  /**
+   * Calculate global statistic (median or average) for a pollutant
+   */
+  getGlobalPollutionStat(
+    pollutant: Pollutant,
+    stat: 'median' | 'average' = 'median',
+    year: number | 'all' = 'all'
+  ): number | null {
+    const countriesWithPollution = this.getCountriesWithPollution(pollutant, stat, year);
+    if (countriesWithPollution.length === 0) return null;
+
+    const values = countriesWithPollution.map(c => c.value);
+
+    if (stat === 'median') {
+      // Calculate median of all country values
+      values.sort((a, b) => a - b);
+      const mid = Math.floor(values.length / 2);
+      return values.length % 2 !== 0
+        ? values[mid]
+        : (values[mid - 1] + values[mid]) / 2;
+    } else {
+      // Calculate average
+      return values.reduce((a, b) => a + b, 0) / values.length;
+    }
+  }
+
   getCountryPollution(countryCode: string, pollutant: Pollutant, stat: 'median' | 'average' = 'median'): number | null {
     const country = this.countriesSubject.value.find(c => c.code_pays === countryCode);
     if (!country) return null;

@@ -180,6 +180,18 @@ export interface AcpData {
   variables: string[];
 }
 
+export interface Chi2Result {
+  test: string;
+  description: string;
+  chi2: number;
+  p_value: number;
+  dof: number;
+  cramers_v: number;
+  significatif: boolean;
+  interpretation: string;
+  conclusion: string;
+}
+
 // Filtres
 export interface FilterState {
   pollutant: Pollutant;

@@ -7,6 +7,7 @@ import { FilterBarComponent } from './components/filter-bar/filter-bar.component
 import { AccueilComponent } from './components/sections/accueil/accueil.component';
 import { TendancesComponent } from './components/sections/tendances/tendances.component';
 import { FacteursComponent } from './components/sections/facteurs/facteurs.component';
+import { Chi2Component } from './components/sections/chi2/chi2.component';
 import { AcpComponent } from './components/sections/acp/acp.component';
 import { PredictionComponent } from './components/sections/prediction/prediction.component';
 import { QualiteComponent } from './components/sections/qualite/qualite.component';
@@ -22,6 +23,7 @@ import { DataService } from './services/data.service';
     AccueilComponent,
     TendancesComponent,
     FacteursComponent,
+    Chi2Component,
     AcpComponent,
     PredictionComponent,
     QualiteComponent
@@ -52,6 +54,7 @@ import { DataService } from './services/data.service';
         <app-accueil></app-accueil>
         <app-tendances></app-tendances>
         <app-facteurs></app-facteurs>
+        <app-chi2></app-chi2>
         <app-acp></app-acp>
         <app-prediction></app-prediction>
         <app-qualite></app-qualite>
@@ -173,7 +176,7 @@ export class App implements OnInit {
   private dataService = inject(DataService);
   loading = true;
 
-  private sectionIds = ['accueil', 'tendances', 'facteurs', 'acp', 'prediction', 'qualite'];
+  private sectionIds = ['accueil', 'tendances', 'facteurs', 'chi2', 'acp', 'prediction', 'qualite'];
 
   ngOnInit(): void {
     this.dataService.loadAllData().subscribe({

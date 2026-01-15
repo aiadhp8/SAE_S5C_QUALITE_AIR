@@ -1,0 +1,57 @@
+[
+  {
+    "test": "Region vs Niveau pollution PM2.5",
+    "description": "Test d'indépendance entre la région géographique et le niveau de pollution PM2.5",
+    "chi2": 38.58,
+    "p_value": 0.0001,
+    "dof": 12,
+    "cramers_v": 0.441,
+    "significatif": true,
+    "interpretation": "Dépendance",
+    "conclusion": "Le niveau de pollution PM2.5 dépend significativement de la région géographique. Les régions d'Asie du Sud et d'Afrique présentent des niveaux plus élevés."
+  },
+  {
+    "test": "Dépassement OMS vs Région",
+    "description": "Test d'indépendance entre le dépassement du seuil OMS (5 µg/m³) et la région",
+    "chi2": 5.37,
+    "p_value": 0.2514,
+    "dof": 4,
+    "cramers_v": 0.285,
+    "significatif": false,
+    "interpretation": "Indépendance",
+    "conclusion": "Le dépassement des seuils OMS est uniformément réparti entre les régions. Aucune région n'est significativement plus à risque."
+  },
+  {
+    "test": "Tendance temporelle vs Région",
+    "description": "Test d'indépendance entre la tendance d'évolution de la pollution et la région",
+    "chi2": 14.64,
+    "p_value": 0.0665,
+    "dof": 8,
+    "cramers_v": 0.372,
+    "significatif": false,
+    "interpretation": "Indépendance",
+    "conclusion": "Les tendances d'amélioration ou de dégradation de la qualité de l'air ne dépendent pas significativement de la région."
+  },
+  {
+    "test": "Impact COVID vs Région",
+    "description": "Test d'indépendance entre l'impact du COVID-19 sur la pollution et la région",
+    "chi2": 23.09,
+    "p_value": 0.0033,
+    "dof": 8,
+    "cramers_v": 0.501,
+    "significatif": true,
+    "interpretation": "Dépendance",
+    "conclusion": "L'impact du COVID-19 sur la pollution varie significativement selon les régions. Les régions industrialisées ont montré une baisse plus marquée."
+  },
+  {
+    "test": "Polluant dominant vs Région",
+    "description": "Test d'indépendance entre le polluant dominant et la région géographique",
+    "chi2": 7.04,
+    "p_value": 0.5328,
+    "dof": 8,
+    "cramers_v": 0.227,
+    "significatif": false,
+    "interpretation": "Indépendance",
+    "conclusion": "Le type de polluant dominant ne dépend pas de la région. Les mêmes polluants prédominent globalement."
+  }
+]
